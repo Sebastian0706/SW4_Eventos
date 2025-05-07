@@ -37,7 +37,6 @@ async function initDb() {
     `);
 
     // Tabla artistas
-
     await connection.query(`
       CREATE TABLE IF NOT EXISTS artistas (
         id_artista INT AUTO_INCREMENT PRIMARY KEY,
@@ -45,7 +44,6 @@ async function initDb() {
       )
     `);
 
-    
     // Tabla Eventos
     await connection.query(`
       CREATE TABLE IF NOT EXISTS eventos (
@@ -56,6 +54,7 @@ async function initDb() {
         ciudad_evento VARCHAR(100) NOT NULL,
         departamento_evento VARCHAR(100) NOT NULL,
         aforo_evento INT NOT NULL,
+        precio_evento DECIMAL NOT NULL,
         fecha_inicio_evento DATE NOT NULL,
         fecha_fin_evento DATE NOT NULL,
         hora_apertura DATETIME NOT NULL,
@@ -85,7 +84,7 @@ async function initDb() {
         direccion_usuario VARCHAR(100) NOT NULL,
         nombre_usuario VARCHAR(100) NOT NULL UNIQUE,
         correo VARCHAR(200) NOT NULL UNIQUE,
-        contraseña VARCHAR(255) NOT NULL,
+        contrasena VARCHAR(255) NOT NULL,
         id_rol_PK INT NOT NULL,
         FOREIGN KEY (id_rol_PK) REFERENCES roles(id_rol) ON DELETE CASCADE
       )
@@ -134,7 +133,7 @@ async function initDb() {
   // Tabla compra_boleta
     await connection.query(`
     CREATE TABLE IF NOT EXISTS compra_boleta (
-      id INT AUTO_INCREMENT PRIMARY KEY,
+      id_compro_boleta INT AUTO_INCREMENT PRIMARY KEY,
       id_compra_PK INT NOT NULL,
       id_boleta_PK INT NOT NULL,
       cantidad INT NOT NULL,
