@@ -17,27 +17,76 @@ async function initDb() {
   try {
     const connection = await pool.getConnection();
 
+    // Tabla roles 
+    await connection.query(`
+      CREATE TABLE IF NOT EXISTS roles (
+        id_rol INT AUTO_INCREMENT PRIMARY KEY,
+        nombre_rol VARCHAR(100) NOT NULL
+      )
+    `);
+
+     // Tabla organizadores
+     await connection.query(`
+      CREATE TABLE IF NOT EXISTS organizadores (
+        id_organizador INT AUTO_INCREMENT PRIMARY KEY,
+        nombre_organizador VARCHAR(200) NOT NULL,
+        tipo_documento VARCHAR(100) NOT NULL,
+        num_documento INT NOT NULL,
+        direccion VARCHAR(100) NOT NULL
+      )
+    `);
+
+    // Tabla artistas
+    await connection.query(`
+      CREATE TABLE IF NOT EXISTS artistas (
+        id_artista INT AUTO_INCREMENT PRIMARY KEY,
+        nombre_artista VARCHAR(100) NOT NULL
+      )
+    `);
+
+    // Tabla Eventos
+    await connection.query(`
+      CREATE TABLE IF NOT EXISTS eventos (
+        id_evento INT AUTO_INCREMENT PRIMARY KEY,
+        nombre_evento VARCHAR(200) NOT NULL,
+        categoria_evento VARCHAR(100) NOT NULL,
+        lugar_evento VARCHAR(200) NOT NULL,
+        ciudad_evento VARCHAR(100) NOT NULL,
+        departamento_evento VARCHAR(100) NOT NULL,
+        aforo_evento INT NOT NULL,
+        precio_evento DECIMAL NOT NULL,
+        fecha_inicio_evento DATE NOT NULL,
+        fecha_fin_evento DATE NOT NULL,
+        hora_apertura DATETIME NOT NULL,
+        genero_evento VARCHAR(200) NOT NULL,
+        edad_minima INT NOT NULL,
+        id_artista_PK INT NOT NULL,
+        id_organizador_PK INT NOT NULL,
+        FOREIGN KEY (id_artista_PK) REFERENCES artistas(id_artista) ON DELETE CASCADE,
+        FOREIGN KEY (id_organizador_PK) REFERENCES organizadores(id_organizador) ON DELETE CASCADE,
+        UNIQUE KEY unique_evento (id_artista_PK, id_organizador_PK)
+  
+      )
+    `);
+
     // Tabla de usuarios
     await connection.query(`
       CREATE TABLE IF NOT EXISTS usuarios (
-        id INT AUTO_INCREMENT PRIMARY KEY,
+        id_usuario INT AUTO_INCREMENT PRIMARY KEY,
         primer_nombre VARCHAR(200) NOT NULL,
         segundo_nombre VARCHAR(200),
         primer_apellido VARCHAR(200) NOT NULL,
         segundo_apellido VARCHAR(200),
         tipo_documento VARCHAR(100) NOT NULL,
-        n_documento INT NOT NULL,
-        edad INT CHECK (edad >= 16),
-        FOREIGN KEY (id_rol) REFERENCES roles(id) ON DELETE CASCADE
-      )
-    `);
-
-
-    // Tabla roles 
-    await connection.query(`
-      CREATE TABLE IF NOT EXISTS roles (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        nombre VARCHAR(100) NOT NULL
+        numero_documento VARCHAR(50) NOT NULL UNIQUE,
+        fecha_nacimiento DATE NOT NULL,
+        celular_usuario VARCHAR(100) NOT NULL,
+        direccion_usuario VARCHAR(100) NOT NULL,
+        nombre_usuario VARCHAR(100) NOT NULL UNIQUE,
+        correo VARCHAR(200) NOT NULL UNIQUE,
+        contrasena VARCHAR(255) NOT NULL,
+        id_rol_PK INT NOT NULL,
+        FOREIGN KEY (id_rol_PK) REFERENCES roles(id_rol) ON DELETE CASCADE
       )
     `);
 
@@ -45,24 +94,25 @@ async function initDb() {
     // Tabla compras
     await connection.query(`
       CREATE TABLE IF NOT EXISTS compras (
-        id INT AUTO_INCREMENT PRIMARY KEY,
+        id_compra INT AUTO_INCREMENT PRIMARY KEY,
         cantidad_boletas INT NOT NULL,
         valor_entrada INT NOT NULL,
-        pago INT NOT NULL,
-        FOREIGN KEY (id_usuario) REFERENCES usuarios(id) ON DELETE CASCADE,
-        FOREIGN KEY (id_boleta) REFERENCES boletas(id) ON DELETE CASCADE,
-        UNIQUE KEY unique_compra (id_usuario, id_boleta)
-
+        valor_servicio INT NOT NULL,
+        valor_pago INT NOT NULL,
+        id_usuario_PK INT NOT NULL,
+        FOREIGN KEY (id_usuario_PK) REFERENCES usuarios(id_usuario) ON DELETE CASCADE
       )
     `);
 
     // Tabla ventas
     await connection.query(`
       CREATE TABLE IF NOT EXISTS ventas (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        total INT NOT NULL,
-        forma_pago VARCHAR(100) NOT NULL,
-        FOREIGN KEY (id_compra) REFERENCES compras(id) ON DELETE CASCADE
+        id_venta INT AUTO_INCREMENT PRIMARY KEY,
+        valor_total INT NOT NULL,
+        fecha_venta DATE NOT NULL,
+        metodo_pago VARCHAR(100) NOT NULL,
+        id_compra_PK INT NOT NULL,
+        FOREIGN KEY (id_compra_PK) REFERENCES compras(id_compra) ON DELETE CASCADE
 
       )
     `);
@@ -70,60 +120,27 @@ async function initDb() {
     // Tabla boletas
     await connection.query(`
     CREATE TABLE IF NOT EXISTS boletas (
-      id INT AUTO_INCREMENT PRIMARY KEY,
-      precio INT NOT NULL,
-      tipo VARCHAR(100) NOT NULL,
-      localidad VARCHAR(100) NOT NULL,
-      FOREIGN KEY (id_evento) REFERENCES eventos(id) ON DELETE CASCADE
+      id_boleta INT AUTO_INCREMENT PRIMARY KEY,
+      precio_boleta INT NOT NULL,
+      tipo_boleta VARCHAR(100) NOT NULL,
+      localidad_boleta VARCHAR(100) NOT NULL,
+      num_personas INT NOT NULL,
+      id_evento_PK INT NOT NULL,
+      FOREIGN KEY (id_evento_PK) REFERENCES eventos(id_evento) ON DELETE CASCADE
 
     )
   `);
-
-    // Tabla Eventos
+  // Tabla compra_boleta
     await connection.query(`
-    CREATE TABLE IF NOT EXISTS eventos (
-      id INT AUTO_INCREMENT PRIMARY KEY,
-      nombre VARCHAR(200) NOT NULL,
-      lugar VARCHAR(200) NOT NULL,
-      aforo INT NOT NULL,
-      fecha DATE NOT NULL,
-      hora DATETIME NOT NULL,
-      tipo VARCHAR(200) NOT NULL,
-      FOREIGN KEY (id_artista) REFERENCES artistas(id) ON DELETE CASCADE,
-      FOREIGN KEY (id_organizador) REFERENCES organizadores(id) ON DELETE CASCADE,
-      UNIQUE KEY unique_evento (id_artista, id_organizador)
-
-    )
-  `);
-
-    // Tabla organizadores
-    await connection.query(`
-      CREATE TABLE IF NOT EXISTS organizadores (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        primer_nombre VARCHAR(200) NOT NULL,
-        segundo_nombre VARCHAR(200),
-        primer_apellido VARCHAR(200) NOT NULL,
-        segundo_apellido VARCHAR(200),
-        tipo_documento VARCHAR(100) NOT NULL,
-        n_documento INT NOT NULL
+    CREATE TABLE IF NOT EXISTS compra_boleta (
+      id_compro_boleta INT AUTO_INCREMENT PRIMARY KEY,
+      id_compra_PK INT NOT NULL,
+      id_boleta_PK INT NOT NULL,
+      cantidad INT NOT NULL,
+      FOREIGN KEY (id_compra_PK) REFERENCES compras(id_compra) ON DELETE CASCADE,
+      FOREIGN KEY (id_boleta_PK) REFERENCES boletas(id_boleta) ON DELETE CASCADE
       )
-    `);
-
-    // Tabla artistas
-
-    await connection.query(`
-      CREATE TABLE IF NOT EXISTS artistas (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        primer_nombre VARCHAR(200) NOT NULL,
-        segundo_nombre VARCHAR(200),
-        primer_apellido VARCHAR(200) NOT NULL,
-        segundo_apellido VARCHAR(200),
-        tipo_documento VARCHAR(100) NOT NULL,
-        n_documento INT NOT NULL,
-        tipo VARCHAR(250) 
-      )
-    `);
-
+      `);
 
     connection.release();
     console.log("Base de datos inicializada correctamente");

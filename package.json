@@ -11,5 +11,22 @@
   "dependencies": {
     "express-validator": "^7.2.1",
     "method-override": "^3.0.0"
-  }
+  },
+  "name": "sw4_eventos",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sebastian0706/SW4_Eventos.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sebastian0706/SW4_Eventos/issues"
+  },
+  "homepage": "https://github.com/Sebastian0706/SW4_Eventos#readme",
+  "description": ""
 }
