@@ -1,15 +1,7 @@
 const express = require('express');
-const { body } = require('express-validator');
 const rolesController = require('../Controller/rolesController');
+const validateRoles = require('../middlewares/rolesValidate');
 const router = express.Router();
-
-//middleware
-const validateRoles = [
-    body('nombre')
-        .notEmpty().withMessage('El nombre es obligatorio')
-        .isLength({ min: 2, max: 200 }).withMessage('El nombre debe tener entre 2 y 200 caracteres'),
-
-];
 
 //rutas
 
