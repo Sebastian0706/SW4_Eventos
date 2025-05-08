@@ -4,14 +4,14 @@ const path = require('path');
 const methodOverride = require('method-override');
 
 
-const usuariosRoutes = require('./routes/usuarios');
-const eventosRoutes = require('./routes/eventos');
-const ventasRoutes = require('./routes/venta');
-const organizadoresRoutes = require('./routes/organizadores');
-const compraRoutes = require('./routes/compra');
-const rolesRoutes = require('./routes/roles');
-const boletasRoutes = require('./routes/boletas');
-const artistasRoutes = require('./routes/artistas');
+const usuariosRoutes = require('./routes/usuariosRoute');
+const eventosRoutes = require('./routes/eventosRoute');
+const ventasRoutes = require('./routes/ventaRoute');
+const organizadoresRoutes = require('./routes/organizadoresRoute');
+const compraRoutes = require('./routes/compraRoute');
+const rolesRoutes = require('./routes/rolesRoute');
+const boletasRoutes = require('./routes/boletasRoute');
+const artistasRoutes = require('./routes/artistasRoute');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
