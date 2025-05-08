@@ -5,11 +5,10 @@ const router = express.Router();
 
 //rutas
 
-router.get('/', rolesController.index);
-router.get('/create', rolesController.create);
-router.post('/', validateRoles, rolesController.store);
-router.get('/:id/edit', rolesController.edit);
-router.put('/:id', validateRoles, rolesController.update);
-router.delete('/:id', rolesController.delete);
+router.get('/', rolesController.listarRoles);
+router.post('/', validateRoles, rolesController.agregarRol);
+router.get('/:id', rolesController.editarRol);
+router.put('/:id', validateRoles, rolesController.actualizarRol);
+router.delete('/:id', rolesController.eliminarRol);
 
 module.exports = router;
