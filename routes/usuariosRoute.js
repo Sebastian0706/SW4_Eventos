@@ -6,13 +6,10 @@ const router = express.Router();
 
 //rutas
 
-router.get('/', usuarioController.index);
-router.get('/create', usuarioController.create);
-router.post('/', validateUsuario, usuarioController.store);
-router.post('/login', usuarioController.login);
-router.get('/:id_usuario/edit', usuarioController.edit);
-router.put('/:id_usuario', validateUsuario, usuarioController.update);
-router.delete('/:id_usuario', usuarioController.delete);
-
+router.get('/', usuarioController.listarUsuarios); 
+router.post('/', validateUsuario, usuarioController.agregarUsuario); 
+router.get('/:id', usuarioController.editarUsuario);
+router.put('/:id', validateUsuario, usuarioController.actualizarUsuario);
+router.delete('/:id', usuarioController.eliminarUsuario); 
 
 module.exports = router;
