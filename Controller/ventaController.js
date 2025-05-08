@@ -1,134 +1,77 @@
 const { validationResult } = require('express-validator');
-const Venta = require('../models/ventaModels');
+const ventaModel = require('../models/ventaModels');
 
-// Mostrar todas las ventas
-exports.index = async (req, res) => {
+exports.listarVentas = async (req, res) => {
   try {
-    const ventas = await Venta.getAll();
-    res.render('ventas/index', {
-      title: 'Listado de Ventas',
-      ventas
-    });
+      const ventas = await ventaModel.getAll();
+      res.status(200).json(ventas);
   } catch (error) {
-    console.error('Error al obtener las ventas:', error);
-    res.status(500).render('error', {
-      title: 'Error',
-      message: 'No se pudieron cargar las ventas.'
-    });
+      console.error(error);
+      res.status(500).json({ message: 'Error al cargar las ventas' });
   }
 };
 
-// Mostrar formulario para crear nueva venta
-exports.create = (req, res) => {
-  res.render('ventas/form', {
-    title: 'Registrar Venta',
-    venta: {},
-    errors: [],
-    isEditing: false
-  });
-};
-
-// Guardar nueva venta
-exports.store = async (req, res) => {
+exports.agregarVenta = async (req, res) => {
   const errors = validationResult(req);
-
   if (!errors.isEmpty()) {
-    return res.render('ventas/form', {
-      title: 'Registrar Venta',
-      venta: req.body,
-      errors: errors.array(),
-      isEditing: false
-    });
-  }
-
-  try {
-    await Venta.create(req.body);
-    res.redirect('/ventas');
-  } catch (error) {
-    console.error('Error al guardar la venta:', error);
-    res.render('ventas/form', {
-      title: 'Registrar Venta',
-      venta: req.body,
-      errors: [{ msg: 'Error al guardar la venta.' }],
-      isEditing: false
-    });
-  }
-};
-
-// Mostrar formulario para editar venta existente
-exports.edit = async (req, res) => {
-  try {
-    const venta = await Venta.getById(req.params.id_venta);
-
-    if (!venta) {
-      return res.status(404).render('error', {
-        title: 'Venta no encontrada',
-        message: 'La venta que buscas no existe.'
+      return res.status(400).json({
+          message: 'Error en la validación',
+          errors: errors.array()
       });
-    }
+  }
 
-    res.render('ventas/form', {
-      title: 'Editar Venta',
-      venta,
-      errors: [],
-      isEditing: true
-    });
+  try {
+      const id = await ventaModel.create(req.body);
+      res.status(201).json({ message: 'Venta creada con éxito', id });
   } catch (error) {
-    console.error('Error al cargar la venta:', error);
-    res.status(500).render('error', {
-      title: 'Error',
-      message: 'No se pudo cargar la venta.'
-    });
+      console.error(error);
+      res.status(500).json({ message: 'Error al crear la venta' });
   }
 };
 
-// Actualizar venta existente
-exports.update = async (req, res) => {
+exports.editarVenta = async (req, res) => {
+  try {
+      const venta = await ventaModel.getById(req.params.id);
+      if (!venta) {
+          return res.status(404).json({ message: 'Venta no encontrada' });
+      }
+      res.status(200).json(venta);
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Error al cargar los datos de la venta' });
+  }
+};
+
+exports.actualizarVenta = async (req, res) => {
   const errors = validationResult(req);
-
   if (!errors.isEmpty()) {
-    return res.render('ventas/form', {
-      title: 'Editar Venta',
-      venta: { ...req.body, id_venta: req.params.id_venta },
-      errors: errors.array(),
-      isEditing: true
-    });
+      return res.status(400).json({
+          message: 'Error en la validación',
+          errors: errors.array()
+      });
   }
 
   try {
-    const success = await Venta.update(req.params.id_venta, req.body);
-
-    if (!success) {
-      return res.status(404).render('error', {
-        title: 'Venta no encontrada',
-        message: 'La venta que estás intentando actualizar no existe.'
-      });
-    }
-
-    res.redirect('/ventas');
+      const success = await ventaModel.update(req.params.id, req.body);
+      if (!success) {
+          return res.status(404).json({ message: 'Venta no encontrada' });
+      }
+      res.status(200).json({ message: 'Venta actualizada con éxito' });
   } catch (error) {
-    console.error('Error al actualizar la venta:', error);
-    res.render('ventas/form', {
-      title: 'Editar Venta',
-      venta: { ...req.body, id_venta: req.params.id_venta },
-      errors: [{ msg: 'Error al actualizar la venta.' }],
-      isEditing: true
-    });
+      console.error(error);
+      res.status(500).json({ message: 'Error al actualizar la venta' });
   }
 };
 
-// Eliminar venta
-exports.delete = async (req, res) => {
+exports.eliminarVenta = async (req, res) => {
   try {
-    const success = await Venta.delete(req.params.id_venta);
-
-    if (!success) {
-      return res.status(404).json({ success: false, message: 'Venta no encontrada' });
-    }
-
-    res.redirect('/ventas');
+      const success = await ventaModel.delete(req.params.id);
+      if (!success) {
+          return res.status(404).json({ success: false, message: 'Venta no encontrada' });
+      }
+      res.status(200).json({ message: 'Venta eliminada con éxito' });
   } catch (error) {
-    console.error('Error al eliminar la venta:', error);
-    res.status(500).json({ success: false, message: 'Error al eliminar la venta' });
+      console.error(error);
+      res.status(500).json({ success: false, message: 'Error al eliminar la venta' });
   }
 };

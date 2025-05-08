@@ -5,11 +5,10 @@ const router = express.Router();
 
 //rutas
 
-router.get('/', ventaController.index);
-router.get('/create', ventaController.create);
-router.post('/', validateVenta, ventaController.store);
-router.get('/:id/edit', ventaController.edit);
-router.put('/:id', validateVenta, ventaController.update);
-router.delete('/:id', ventaController.delete);
+router.get('/', ventaController.listarVentas);
+router.post('/', validateVenta, ventaController.agregarVenta);
+router.get('/:id', ventaController.editarVenta);
+router.put('/:id', validateVenta, ventaController.editarVenta);
+router.delete('/:id', ventaController.eliminarVenta);
 
 module.exports = router;
