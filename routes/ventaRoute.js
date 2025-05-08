@@ -8,7 +8,6 @@ const router = express.Router();
 router.get('/', ventaController.index);
 router.get('/create', ventaController.create);
 router.post('/', validateVenta, ventaController.store);
-router.get('/:id', ventaController.show);
 router.get('/:id/edit', ventaController.edit);
 router.put('/:id', validateVenta, ventaController.update);
 router.delete('/:id', ventaController.delete);

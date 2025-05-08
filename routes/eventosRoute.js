@@ -8,7 +8,6 @@ const router = express.Router();
 router.get('/', eventosController.index);
 router.get('/create', eventosController.create);
 router.post('/', validateEvento, eventosController.store);
-router.get('/:id', eventosController.show);
 router.get('/:id/edit', eventosController.edit);
 router.put('/:id', validateEvento, eventosController.update);
 router.delete('/:id', eventosController.delete);
