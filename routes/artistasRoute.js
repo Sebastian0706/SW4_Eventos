@@ -1,7 +1,7 @@
 const express = require('express');
 const artistaController = require('../Controller/artistasController');
-const validateArtista = require('../middlewares/artistaValidate'); 
-
+const validateArtista = require('../middlewares/artistaValidate');
+const router = express.Router();
 // Rutas para artistas
 router.get('/', artistaController.listarArtistas);
 router.post('/', validateArtista, artistaController.agregarArtista);
