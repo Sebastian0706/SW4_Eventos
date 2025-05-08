@@ -9,7 +9,6 @@ const router = express.Router();
 router.get('/', artistasController.index);
 router.get('/create', artistasController.create);
 router.post('/', validateArtistas, artistasController.store);
-router.get('/:id', artistasController.show);
 router.get('/:id/edit', artistasController.edit);
 router.put('/:id', validateArtistas, artistasController.update);
 router.delete('/:id', artistasController.delete);

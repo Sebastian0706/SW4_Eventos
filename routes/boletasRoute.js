@@ -10,7 +10,6 @@ const router = express.Router();
 router.get('/', boletasController.index);
 router.get('/create', boletasController.create);
 router.post('/', validateBoletas, boletasController.store);
-router.get('/:id', boletasController.show);
 router.get('/:id/edit', boletasController.edit);
 router.put('/:id', validateBoletas, boletasController.update);
 router.delete('/:id', boletasController.delete);

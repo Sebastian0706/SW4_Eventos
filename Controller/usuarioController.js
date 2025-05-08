@@ -64,7 +64,6 @@ exports.edit = async (req, res) => {
         message: 'Usuario no encontrado'
       });
     }
-
     res.render('usuarios/form', {
       title: 'Editar Usuario',
       usuario,

@@ -8,7 +8,6 @@ const router = express.Router();
 router.get('/', rolesController.index);
 router.get('/create', rolesController.create);
 router.post('/', validateRoles, rolesController.store);
-router.get('/:id', rolesController.show);
 router.get('/:id/edit', rolesController.edit);
 router.put('/:id', validateRoles, rolesController.update);
 router.delete('/:id', rolesController.delete);
