@@ -66,15 +66,6 @@ class Evento {
     const [rows] = await pool.query('SELECT * FROM entradas WHERE evento_id = ?', [eventoId]);
     return rows;
   }
-
-  static async generarEntrada(usuario_id, evento_id) {
-    const codigoQR = `QR-${evento_id}-${usuario_id}-${Date.now()}`;
-    const [result] = await pool.query(
-      'INSERT INTO entradas (usuario_id, evento_id, codigo_qr) VALUES (?, ?, ?)',
-      [usuario_id, evento_id, codigoQR]
-    );
-    return result.insertId;
-  }
 }
 
 module.exports = Evento;

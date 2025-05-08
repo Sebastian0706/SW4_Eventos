@@ -21,10 +21,23 @@ class Usuario {
     }
   }
 
+  static async findByUsername(nombre_usuario) {
+    try {
+      const [rows] = await pool.query(
+        'SELECT * FROM usuarios WHERE nombre_usuario = ?',
+        [nombre_usuario]
+      );
+      return rows[0]; 
+    } catch (error) {
+      console.error(`Error al buscar usuario por nombre de usuario ${nombre_usuario}:`, error);
+      throw error;
+    }
+  }
+
   static async create(usuario) {
     try {
       const { primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, tipo_documento, numero_documento, fecha_nacimiento,
-        celular_usuario, direccion_usuario,nombre_usuario, correo, contrasena, id_rol_PK } = usuario;
+        celular_usuario, direccion_usuario, nombre_usuario, correo, contrasena, id_rol_PK } = usuario;
 
       const [result] = await pool.query(
         `INSERT INTO usuarios (primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, tipo_documento, numero_documento, fecha_nacimiento,
