@@ -1,127 +1,78 @@
 const { validationResult } = require('express-validator');
-const Artista = require('../models/artistasModels');
+const artistaModel = require('../models/artistasModels');
 
-exports.index = async (req, res) => {
+exports.listarArtistas = async (req, res) => {
   try {
-    const artistas = await Artista.getAll();
-    res.render('artistas/index', {
-      title: 'Listado de Artistas',
-      artistas
-    });
+    const artistas = await artistaModel.getAll();
+    res.status(200).json(artistas);
   } catch (error) {
-    console.error('Error al cargar artistas:', error);
-    res.status(500).render('error', {
-      title: 'Error',
-      message: 'Hubo un error al cargar los artistas'
-    });
+    console.error(error);
+    res.status(500).json({ message: 'Error al cargar los artistas' });
   }
 };
 
-exports.create = (req, res) => {
-  res.render('artistas/form', {
-    title: 'Registrar Artista',
-    artista: {},
-    errors: [],
-    isEditing: false
-  });
-};
-
-exports.store = async (req, res) => {
+exports.agregarArtista = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.render('artistas/form', {
-      title: 'Registrar Artista',
-      artista: req.body,
-      errors: errors.array(),
-      isEditing: false
+    return res.status(400).json({
+      message: 'Error en la validación',
+      errors: errors.array()
     });
   }
 
   try {
-    await Artista.create(req.body);
-    res.redirect('/artistas');
+    await artistaModel.create(req.body);
+    res.status(201).json({ message: 'Artista creado con éxito' });
   } catch (error) {
-    console.error('Error al crear artista:', error);
-    res.render('artistas/form', {
-      title: 'Registrar Artista',
-      artista: req.body,
-      errors: [{ msg: 'Error al registrar el artista.' }],
-      isEditing: false
-    });
+    console.error(error);
+    res.status(500).json({ message: 'Error al crear el artista' });
   }
 };
 
-exports.edit = async (req, res) => {
-  const { id_artista } = req.params;
-
+exports.editarArtista = async (req, res) => {
   try {
-    const artista = await Artista.getById(id_artista);
+    const artista = await artistaModel.getById(req.params.id_artista);
     if (!artista) {
-      return res.status(404).render('error', {
-        title: 'Error',
-        message: 'Artista no encontrado'
-      });
+      return res.status(404).json({ message: 'Artista no encontrado' });
     }
-
-    res.render('artistas/form', {
-      title: 'Editar Artista',
-      artista,
-      errors: [],
-      isEditing: true
-    });
+    res.status(200).json(artista);
   } catch (error) {
-    console.error('Error al cargar artista:', error);
-    res.status(500).render('error', {
-      title: 'Error',
-      message: 'Error al cargar los datos del artista'
-    });
+    console.error(error);
+    res.status(500).json({ message: 'Error al cargar los datos del artista' });
   }
 };
 
-exports.update = async (req, res) => {
-  const { id_artista } = req.params;
+exports.actualizarArtista = async (req, res) => {
   const errors = validationResult(req);
-
   if (!errors.isEmpty()) {
-    return res.render('artistas/form', {
-      title: 'Editar Artista',
-      artista: { ...req.body, id_artista },
-      errors: errors.array(),
-      isEditing: true
+    return res.status(400).json({
+      message: 'Error en la validación',
+      errors: errors.array()
     });
   }
 
   try {
-    const success = await Artista.update(id_artista, req.body);
+    const success = await artistaModel.update(req.params.id_artista, req.body);
     if (!success) {
-      return res.status(404).render('error', {
-        title: 'Error',
-        message: 'Artista no encontrado'
-      });
+      return res.status(404).json({ message: 'Artista no encontrado' });
     }
-    res.redirect('/artistas');
+    res.status(200).json({ message: 'Artista actualizado con éxito' });
   } catch (error) {
-    console.error('Error al actualizar artista:', error);
-    res.render('artistas/form', {
-      title: 'Editar Artista',
-      artista: { ...req.body, id_artista },
-      errors: [{ msg: 'Error al actualizar el artista.' }],
-      isEditing: true
-    });
+    console.error(error);
+    res.status(500).json({ message: 'Error al actualizar el artista' });
   }
 };
 
-exports.delete = async (req, res) => {
-  const { id_artista } = req.params;
-
+// Eliminar un artista
+exports.eliminarArtista = async (req, res) => {
   try {
-    const success = await Artista.delete(id_artista);
+    const success = await artistaModel.delete(req.params.id_artista);
     if (!success) {
-      return res.status(404).json({ success: false, message: 'Artista no encontrado' });
+      return res.status(404).json({ message: 'Artista no encontrado' });
     }
-    res.redirect('/artistas');
+    res.status(200).json({ message: 'Artista eliminado con éxito' });
   } catch (error) {
-    console.error('Error al eliminar artista:', error);
-    res.status(500).json({ success: false, message: 'Error al eliminar el artista' });
+    console.error(error);
+    res.status(500).json({ message: 'Error al eliminar el artista' });
   }
 };
