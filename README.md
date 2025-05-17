@@ -12,7 +12,7 @@ Para desarrollo, instala nodemon con el siguiente comando:
 npm install --save-dev nodemon
 
 2. Configuración de la base de datos
-Accede a tu gestor de bases de datos (como MySQL Workbench o phpMyAdmin) y crea una nueva base de datos. El nombre puede ser el que prefieras.
+Accede a tu gestor de bases de datos y crea una nueva base de datos. El nombre puede ser el que prefieras.
 
 3. Variables de entorno
 Para manejar la configuración sensible (como credenciales de la base de datos), crea un archivo llamado .env en la raíz del proyecto.
@@ -29,5 +29,5 @@ Finalmente, desde la terminal y estando en la carpeta raíz del proyecto, ejecut
 
 node --watch app.js
 
-Esto iniciará el servidor y aplicará automáticamente los cambios cuando modifiques tu código.
+Esto iniciará el servidor y aplicará automáticamente los cambios cuando se modifique el código.
 
