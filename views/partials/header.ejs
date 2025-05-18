@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= title %> - Sistema de Eventos
+    </title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
+
+    <style>
+        /* Estilos para asegurar consistencia con el Index Canvas */
+        body {
+            font-family: 'Poppins', sans-serif;
+            /* El color de fondo se aplicará en la página principal, no es necesario aquí si es un partial */
+        }
+
+        .custom-navbar {
+            background-color: #2c3e50; /* Azul medianoche, como el jumbotron */
+            padding-top: 0.8rem;
+            padding-bottom: 0.8rem;
+        }
+
+        .custom-navbar .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: #ffffff;
+        }
+        .custom-navbar .navbar-brand:hover {
+            color: #1abc9c; /* Turquesa al pasar el mouse */
+        }
+
+        .custom-navbar .navbar-brand i {
+            margin-right: 8px;
+            color: #1abc9c; /* Icono del brand en Turquesa */
+        }
+
+        .custom-navbar .nav-link {
+            color: rgba(255, 255, 255, 0.85);
+            font-weight: 500;
+            margin-left: 0.5rem;
+            margin-right: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .custom-navbar .nav-link:hover,
+        .custom-navbar .nav-item.active .nav-link { /* Para el item activo */
+            color: #ffffff;
+            text-decoration: none; /* Opcional: quitar subrayado */
+        }
+        
+        .custom-navbar .nav-link i {
+            margin-right: 6px;
+        }
+
+        .navbar-toggler {
+            border-color: rgba(255,255,255,0.5);
+        }
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 0.85)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg custom-navbar">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-ticket-alt"></i> Sistema de Eventos
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/"><i class="fas fa-home"></i> Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/eventos"><i class="fas fa-calendar-alt"></i> Eventos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/artistas"><i class="fas fa-star"></i> Artistas</a>
+                    </li>
+                    </ul>
+            </div>
+        </div>
+    </nav>
+    <main class="content-wrap"> 

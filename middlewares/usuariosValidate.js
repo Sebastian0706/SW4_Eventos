@@ -10,7 +10,7 @@ const validateUsuario = [
     body('tipo_documento')
         .notEmpty().withMessage('El tipo de documento es obligatorio')
         .isLength({ min: 2, max: 100 }).withMessage('El tipo de documento debe tener entre 2 y 100 caracteres de documento válido'),
-    
+
 ];
 
 module.exports = validateUsuario;

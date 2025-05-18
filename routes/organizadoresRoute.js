@@ -5,11 +5,10 @@ const router = express.Router();
 
 //rutas
 
-router.get('/', organizadoresController.index);
-router.get('/create', organizadoresController.create);
-router.post('/', validateOrganizadores, organizadoresController.store);
-router.get('/:id/edit', organizadoresController.edit);
-router.put('/:id', validateOrganizadores, organizadoresController.update);
-router.delete('/:id', organizadoresController.delete);
+router.get('/', organizadoresController.listarOrganizadores);
+router.post('/', validateOrganizadores, organizadoresController.agregarOrganizador);
+router.get('/:id/edit', organizadoresController.editarOrganizador);
+router.put('/:id', validateOrganizadores, organizadoresController.actualizarOrganizador);
+router.delete('/:id', organizadoresController.eliminarOrganizador);
 
 module.exports = router;

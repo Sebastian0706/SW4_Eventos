@@ -1,0 +1,193 @@
+<%- include('partials/header', { title: "Sistema de Gestión de Eventos" }) %>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #eef1f5; /* Un fondo gris azulado muy claro */
+      color: #333; /* Color de texto principal */
+      display: flex; /* Added for sticky footer */
+      flex-direction: column; /* Added for sticky footer */
+      min-height: 100vh; /* Added for sticky footer */
+    }
+
+    .content-wrap { /* Added for sticky footer */
+      flex: 1;
+    }
+
+    /* Jumbotron Personalizado */
+    .custom-jumbotron {
+      background-color: #2c3e50; /* Azul medianoche */
+      color: white;
+      border-radius: 15px;
+      padding: 3rem 2rem; /* Ajustado el padding vertical */
+      margin-top: 2rem; 
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+
+    .custom-jumbotron h1 {
+      font-weight: 700;
+      font-size: 2.5rem; /* Ajustado para el nuevo título */
+    }
+
+    .custom-jumbotron .lead {
+      font-size: 1.1rem; /* Ajustado */
+      color: rgba(255, 255, 255, 0.85);
+      font-weight: 400;
+    }
+
+    .custom-jumbotron hr {
+      border-top: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .custom-jumbotron .btn {
+      font-weight: 600;
+      padding: 0.7rem 1.4rem; /* Ajustado */
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      text-transform: uppercase; 
+      letter-spacing: 0.5px;
+    }
+
+    .custom-jumbotron .btn-outline-light:hover {
+      background-color: white;
+      color: #2c3e50; 
+    }
+    .custom-jumbotron .btn i {
+        margin-right: 8px; 
+    }
+
+    /* Tarjetas Personalizadas */
+    .card {
+      border: none; 
+      border-radius: 12px; 
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      background-color: #ffffff; 
+    }
+
+    .card:hover {
+      transform: translateY(-8px); 
+      box-shadow: 0 12px 30px rgba(44, 62, 80, 0.2); 
+    }
+
+    .card-title {
+      font-weight: 600;
+      color: #34495e; 
+    }
+
+    .card-title i {
+      margin-right: 10px;
+      color: #1abc9c; /* Turquesa para los iconos en las tarjetas */
+    }
+
+    .card-text {
+        color: #555; 
+        font-size: 0.95rem;
+    }
+
+    .card .btn-group .btn {
+        
+        font-weight: 600;
+        border-radius: 6px;
+        padding: 0.5rem 1rem;
+        transition: all 0.2s ease-in-out;
+    }
+    
+    .btn-custom-primary {
+      background-color: #1abc9c; /* Turquesa */
+      border-color: #1abc9c;
+      color: white;
+    }
+    .btn-custom-primary:hover {
+      background-color: #16a085; /* Turquesa más oscuro */
+      border-color: #16a085;
+      color: white;
+      transform: scale(1.05);
+    }
+
+    .btn-custom-outline-primary {
+      border-color: #1abc9c; /* Turquesa */
+      color: #1abc9c;
+    }
+    .btn-custom-outline-primary:hover {
+      background-color: #1abc9c;
+      color: white;
+      transform: scale(1.05);
+    }
+
+    .main-container {
+        padding-top: 1rem; /* Reducido el padding superior */
+        padding-bottom: 3rem;
+    }
+
+    .card-body {
+        display: flex;
+        flex-direction: column;
+        height: 100%; 
+    }
+    .card-body .btn-group {
+        gap: 10px;
+        margin-top: auto; 
+    }
+  </style>
+</head>
+
+<body>
+  <div class="content-wrap"> <div class="container main-container">
+      <div class="jumbotron custom-jumbotron text-center">
+        <h1 class="display-4">Sistema de Gestión de Eventos</h1>
+        <p class="lead">Bienvenido al sistema de gestión y recomendación de eventos.</p>
+        <hr class="my-4">
+        <p>Utilice este sistema para descubrir, gestionar y promocionar eventos, así como para administrar perfiles de artistas.</p>
+        <div class="d-flex justify-content-center flex-wrap mt-4">
+          <a class="btn btn-outline-light btn-lg m-2" href="/eventos" role="button">
+            <i class="fas fa-calendar-alt"></i> Gestionar Eventos
+          </a>
+          <a class="btn btn-outline-light btn-lg m-2" href="/artistas" role="button">
+            <i class="fas fa-star"></i> Gestionar Artistas
+          </a>
+        </div>
+      </div>
+
+      <div class="row mt-5">
+        <div class="col-lg-6 mb-4">
+          <div class="card shadow-sm h-100">
+            <div class="card-body">
+              <h5 class="card-title"><i class="fas fa-calendar-check"></i> Eventos</h5>
+              <p class="card-text">Gestione el registro de eventos, actualice sus datos y consulte su información detallada.</p>
+              <div class="btn-group">
+                <a href="/eventos" class="btn btn-sm btn-custom-outline-primary">Ver Eventos</a>
+                <a href="/eventos/create" class="btn btn-sm btn-custom-primary">Nuevo Evento</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 mb-4">
+          <div class="card shadow-sm h-100">
+            <div class="card-body">
+              <h5 class="card-title"><i class="fas fa-users"></i> Artistas</h5>
+              <p class="card-text">Administre los perfiles de los artistas, sus obras o actuaciones, y su participación en eventos.</p>
+              <div class="btn-group">
+                <a href="/artistas" class="btn btn-sm btn-custom-outline-primary">Ver Artistas</a>
+                <a href="/artistas/create" class="btn btn-sm btn-custom-primary">Nuevo Artista</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <%- include('partials/footer') %>
+</body>
+</html>

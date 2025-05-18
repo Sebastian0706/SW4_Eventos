@@ -1,77 +1,83 @@
 const { validationResult } = require('express-validator');
-const compraModel = require('../models/compraModels');
+const Compra = require('../models/compraModels');
 
-exports.listarCompras = async (req, res) => {
-    try {
-        const compras = await compraModel.getAll();
-        res.status(200).json(compras);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Error al cargar las compras' });
-    }
+// Mostrar todas las compras
+exports.index = async (req, res) => {
+  try {
+    const compras = await Compra.getAll();
+    res.render('compras/index', { title: 'Listado de Compras', compras });
+  } catch (error) {
+    console.error('Error al obtener compras:', error);
+    res.status(500).render('error', { title: 'Error', message: 'No se pudieron cargar las compras.' });
+  }
 };
 
-exports.agregarCompra = async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({
-            message: 'Error en la validación',
-            errors: errors.array()
-        });
-    }
-
-    try {
-        await compraModel.create(req.body);
-        res.status(201).json({ message: 'Compra registrada con éxito' });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Error al registrar la compra' });
-    }
+// Mostrar formulario para crear compra
+exports.create = (req, res) => {
+  res.render('compras/form', { title: 'Crear Compra', compra: {}, errors: [], isEditing: false });
 };
 
-exports.editarCompra = async (req, res) => {
-    try {
-        const compra = await compraModel.getById(req.params.id_compra);
-        if (!compra) {
-            return res.status(404).json({ message: 'Compra no encontrada' });
-        }
-        res.status(200).json(compra);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Error al cargar los datos de la compra' });
-    }
+// Guardar nueva compra
+exports.store = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.render('compras/form', { title: 'Crear Compra', compra: req.body, errors: errors.array(), isEditing: false });
+  }
+
+  try {
+    await Compra.create(req.body);
+    res.redirect('/compras');
+  } catch (error) {
+    console.error('Error al guardar compra:', error);
+    res.render('compras/form', { title: 'Crear Compra', compra: req.body, errors: [{ msg: 'Error al guardar la compra.' }], isEditing: false });
+  }
 };
 
-exports.actualizarCompra = async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({
-            message: 'Error en la validación',
-            errors: errors.array()
-        });
+// Mostrar formulario para editar compra
+exports.edit = async (req, res) => {
+  try {
+    const compra = await Compra.getById(req.params.id_compra);
+    if (!compra) {
+      return res.status(404).render('error', { title: 'Compra no encontrada', message: 'La compra solicitada no existe.' });
     }
-
-    try {
-        const success = await compraModel.update(req.params.id_compra, req.body);
-        if (!success) {
-            return res.status(404).json({ message: 'Compra no encontrada' });
-        }
-        res.status(200).json({ message: 'Compra actualizada con éxito' });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Error al actualizar la compra' });
-    }
+    res.render('compras/form', { title: 'Editar Compra', compra, errors: [], isEditing: true });
+  } catch (error) {
+    console.error('Error al obtener compra:', error);
+    res.status(500).render('error', { title: 'Error', message: 'No se pudo cargar la compra.' });
+  }
 };
 
-exports.eliminarCompra = async (req, res) => {
-    try {
-        const success = await compraModel.delete(req.params.id_compra);
-        if (!success) {
-            return res.status(404).json({ message: 'Compra no encontrada' });
-        }
-        res.status(200).json({ message: 'Compra eliminada con éxito' });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Error al eliminar la compra' });
+// Actualizar compra
+exports.update = async (req, res) => {
+  const errors = validationResult(req);
+  const id_compra = req.params.id_compra;
+
+  if (!errors.isEmpty()) {
+    return res.render('compras/form', { title: 'Editar Compra', compra: { ...req.body, id_compra }, errors: errors.array(), isEditing: true });
+  }
+
+  try {
+    const success = await Compra.update(id_compra, req.body);
+    if (!success) {
+      return res.status(404).render('error', { title: 'Compra no encontrada', message: 'La compra que intentas actualizar no existe.' });
     }
+    res.redirect('/compras');
+  } catch (error) {
+    console.error('Error al actualizar compra:', error);
+    res.render('compras/form', { title: 'Editar Compra', compra: { ...req.body, id_compra }, errors: [{ msg: 'Error al actualizar la compra.' }], isEditing: true });
+  }
+};
+
+// Eliminar compra
+exports.delete = async (req, res) => {
+  try {
+    const success = await Compra.delete(req.params.id_compra);
+    if (!success) {
+      return res.status(404).json({ success: false, message: 'Compra no encontrada' });
+    }
+    res.redirect('/compras');
+  } catch (error) {
+    console.error('Error al eliminar compra:', error);
+    res.status(500).json({ success: false, message: 'Error al eliminar la compra' });
+  }
 };
