@@ -16,23 +16,24 @@
               <tr>
                 <th>ID</th>
                 <th>Nombre</th>
+                <th>Acciones</th>
               </tr>
             </thead>
             <tbody>
               <% artistas.forEach(artista => { %>
                 <tr>
-                  <td><%= artista.id %></td>
-                  <td><%= artista.nombre %></td>
+                  <td><%= artista.id_artista %></td>
+                  <td><%= artista.nombre_artista %></td>
                   
                   <td>
                     <div class="btn-group btn-group-sm">
-                      <a href="/artistas/<%= artista.id %>" class="btn btn-info" data-toggle="tooltip" title="Ver detalle">
+                      <a href="/artistas/<%= artista.id_artista %>" class="btn btn-info" data-toggle="tooltip" title="Ver detalle">
                         <i class="fas fa-eye"></i>
                       </a>
-                      <a href="/artistas/<%= artista.id %>/edit" class="btn btn-warning" data-toggle="tooltip" title="Editar">
+                      <a href="/artistas/<%= artista.id_artista %>/edit" class="btn btn-warning" data-toggle="tooltip" title="Editar">
                         <i class="fas fa-edit"></i>
                       </a>
-                      <form action="/artistas/<%= artista.id %>?_method=DELETE" method="POST" class="d-inline">
+                      <form action="/artistas/<%= artista.id_artista %>?_method=DELETE" method="POST" class="d-inline">
                         <button type="submit" class="btn btn-danger" data-toggle="tooltip" title="Eliminar" onclick="confirmarEliminacion(event, 'artista')">
                           <i class="fas fa-trash"></i>
                         </button>

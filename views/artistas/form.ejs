@@ -20,11 +20,11 @@
         </div>
       <% } %>
 
-      <form action="<%= isEditing ? `/artistas/${artista.id}?_method=PUT` : '/artistas' %>" method="POST">
+      <form action="<%= isEditing ? `/artistas/${artista.id_artista}?_method=PUT` : '/artistas' %>" method="POST">
         <div class="form-row">
           <div class="form-group col-md-6">
             <label for="nombre">Nombre del artista </label>
-            <input type="text" class="form-control" id="nombre" name="nombre" value="<%= artista.nombre_artista || '' %>" required>
+            <input type="text" class="form-control" id="nombre" name="nombre_artista" value="<%= artista.nombre_artista || '' %>" required>
           </div>
         </div>
 

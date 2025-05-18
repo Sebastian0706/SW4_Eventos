@@ -1,14 +1,16 @@
 const express = require('express');
-const eventosController = require('../Controller/eventosController');
-const validateEvento = require('../middlewares/eventoValidate')
 const router = express.Router();
+const eventosController = require('../Controller/eventosController');
+const validateEvento = require('../middlewares/eventoValidate');
 
-//rutas
 
-router.get('/', eventosController.listarEventos);
-router.post('/', validateEvento, eventosController.agregarEvento);
-router.get('/:id/edit', eventosController.agregarEvento);
-router.put('/:id', validateEvento, eventosController.actualizarEvento);
-router.delete('/:id', eventosController.eliminarEvento);
+router.get('/', eventosController.index);
+router.get('/filter', eventosController.filter);
+router.get('/create', eventosController.create);
+router.post('/', validateEvento, eventosController.store);
+router.get('/:id_evento/edit', eventosController.edit);
+router.put('/:id_evento', validateEvento, eventosController.update);
+router.delete('/:id_evento', eventosController.delete);
+router.get('/:id_evento/entradas', eventosController.entradasVendidas);
 
 module.exports = router;

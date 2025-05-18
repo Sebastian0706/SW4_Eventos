@@ -1,15 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const artistaController = require('../Controller/artistasController');
-const validateArtista = require('../middlewares/artistaValidate');
-// Rutas para artistas
-router.get('/', artistaController.index);
-router.get('/create', artistaController.create);
-router.post('/', validateArtista, artistaController.store);
-router.get('/:id', artistaController.edit);
-router.put('/:id/edit', validateArtista, artistaController.update);
-router.delete('/:id', artistaController.delete);
+const artistasController = require('../Controller/artistasController');
+const validateArtistas = require('../middlewares/artistaValidate');
 
-
+router.get('/', artistasController.index);
+router.get('/create', artistasController.create);
+router.post('/', validateArtistas, artistasController.store);
+router.get('/:id_artista/editar', artistasController.edit);
+router.put('/:id_artista', validateArtistas, artistasController.update);
+router.delete('/:id_artista', artistasController.delete);
+router.get('/:id_artista', artistasController.show);
 
 module.exports = router;

@@ -1,13 +1,14 @@
 const express = require('express');
-const boletaController = require('../Controller/boletasController');
-const validateBoleta = require('../middlewares/boletaValidate');
 const router = express.Router();
+const boletasController = require('../Controller/boletasController');
+const validateBoleta = require('../middlewares/boletaValidate');
 
-// Rutas para boletas
-router.get('/', boletaController.listarBoletas);
-router.post('/', validateBoleta, boletaController.agregarBoleta);
-router.get('/:id_boleta', boletaController.editarBoleta);
-router.put('/:id_boleta', validateBoleta, boletaController.actualizarBoleta);
-router.delete('/:id_boleta', boletaController.eliminarBoleta);
+
+router.get('/', boletasController.index);
+router.get('/crear', boletasController.create);
+router.post('/', validateBoleta, boletasController.store);
+router.get('/:id_boleta/editar', boletasController.edit);
+router.put('/:id_boleta', validateBoleta, boletasController.update);
+router.delete('/:id_boleta', boletasController.delete);
 
 module.exports = router;
