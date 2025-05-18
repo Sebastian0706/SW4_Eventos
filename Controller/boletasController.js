@@ -1,6 +1,7 @@
 const { validationResult } = require('express-validator');
 const Boleta = require('../models/boletasModels');
 
+// Mostrar todas las boletas
 exports.index = async (req, res) => {
   try {
     const boletas = await Boleta.getAll();
@@ -17,6 +18,7 @@ exports.index = async (req, res) => {
   }
 };
 
+// Mostrar formulario para crear una nueva boleta
 exports.create = (req, res) => {
   res.render('boletas/form', {
     title: 'Crear Boleta',
@@ -26,6 +28,7 @@ exports.create = (req, res) => {
   });
 };
 
+// Guardar una nueva boleta
 exports.store = async (req, res) => {
   const errors = validationResult(req);
 
@@ -52,6 +55,7 @@ exports.store = async (req, res) => {
   }
 };
 
+// Mostrar formulario para editar una boleta existente
 exports.edit = async (req, res) => {
   try {
     const boleta = await Boleta.getById(req.params.id_boleta);
@@ -78,6 +82,7 @@ exports.edit = async (req, res) => {
   }
 };
 
+// Actualizar una boleta existente
 exports.update = async (req, res) => {
   const errors = validationResult(req);
   const id_boleta = req.params.id_boleta;
@@ -113,6 +118,7 @@ exports.update = async (req, res) => {
   }
 };
 
+// Eliminar una boleta existente
 exports.delete = async (req, res) => {
   const id_boleta = req.params.id_boleta;
 

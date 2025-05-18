@@ -1,77 +1,83 @@
 const { validationResult } = require('express-validator');
-const rolModel = require('../models/rolesModels');
+const Rol = require('../models/rolesModels');
 
-exports.listarRoles = async (req, res) => {
+// Listar todos los roles
+exports.index = async (req, res) => {
   try {
-      const roles = await rolModel.getAll();
-      res.status(200).json(roles);
+    const roles = await Rol.getAll();
+    res.render('roles/index', { title: 'Listado de Roles', roles });
   } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Error al cargar los roles' });
+    console.error('Error al obtener roles:', error);
+    res.status(500).render('error', { title: 'Error', message: 'No se pudieron cargar los roles.' });
   }
 };
 
-exports.agregarRol = async (req, res) => {
+// Mostrar formulario para crear rol
+exports.create = (req, res) => {
+  res.render('roles/form', { title: 'Crear Rol', rol: {}, errors: [], isEditing: false });
+};
+
+// Guardar nuevo rol
+exports.store = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-      return res.status(400).json({
-          message: 'Error en la validación',
-          errors: errors.array()
-      });
+    return res.render('roles/form', { title: 'Crear Rol', rol: req.body, errors: errors.array(), isEditing: false });
   }
 
   try {
-      await rolModel.create(req.body);
-      res.status(201).json({ message: 'Rol creado con éxito' });
+    await Rol.create(req.body.nombre_rol);
+    res.redirect('/roles');
   } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Error al crear el rol' });
+    console.error('Error al guardar rol:', error);
+    res.render('roles/form', { title: 'Crear Rol', rol: req.body, errors: [{ msg: 'Error al guardar el rol.' }], isEditing: false });
   }
 };
 
-exports.editarRol = async (req, res) => {
+// Mostrar formulario para editar rol
+exports.edit = async (req, res) => {
   try {
-      const rol = await rolModel.getById(req.params.id);
-      if (!rol) {
-          return res.status(404).json({ message: 'Rol no encontrado' });
-      }
-      res.status(200).json(rol);
+    const rol = await Rol.getById(req.params.id_rol);
+    if (!rol) {
+      return res.status(404).render('error', { title: 'Rol no encontrado', message: 'El rol solicitado no existe.' });
+    }
+    res.render('roles/form', { title: 'Editar Rol', rol, errors: [], isEditing: true });
   } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Error al cargar los datos del rol' });
+    console.error('Error al obtener rol:', error);
+    res.status(500).render('error', { title: 'Error', message: 'No se pudo cargar el rol.' });
   }
 };
 
-exports.actualizarRol = async (req, res) => {
+// Actualizar rol
+exports.update = async (req, res) => {
   const errors = validationResult(req);
+  const id_rol = req.params.id_rol;
+
   if (!errors.isEmpty()) {
-      return res.status(400).json({
-          message: 'Error en la validación',
-          errors: errors.array()
-      });
+    return res.render('roles/form', { title: 'Editar Rol', rol: { ...req.body, id_rol }, errors: errors.array(), isEditing: true });
   }
 
   try {
-      const success = await rolModel.update(req.params.id, req.body);
-      if (!success) {
-          return res.status(404).json({ message: 'Rol no encontrado' });
-      }
-      res.status(200).json({ message: 'Rol actualizado con éxito' });
+    const success = await Rol.update(id_rol, req.body.nombre_rol);
+    if (!success) {
+      return res.status(404).render('error', { title: 'Rol no encontrado', message: 'El rol que intentas actualizar no existe.' });
+    }
+    res.redirect('/roles');
   } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Error al actualizar el rol' });
+    console.error('Error al actualizar rol:', error);
+    res.render('roles/form', { title: 'Editar Rol', rol: { ...req.body, id_rol }, errors: [{ msg: 'Error al actualizar el rol.' }], isEditing: true });
   }
 };
 
-exports.eliminarRol = async (req, res) => {
+// Eliminar rol
+exports.delete = async (req, res) => {
   try {
-      const success = await rolModel.delete(req.params.id);
-      if (!success) {
-          return res.status(404).json({ success: false, message: 'Rol no encontrado' });
-      }
-      res.status(200).json({ message: 'Rol eliminado con éxito' });
+    const success = await Rol.delete(req.params.id_rol);
+    if (!success) {
+      return res.status(404).json({ success: false, message: 'Rol no encontrado' });
+    }
+    res.redirect('/roles');
   } catch (error) {
-      console.error(error);
-      res.status(500).json({ success: false, message: 'Error al eliminar el rol' });
+    console.error('Error al eliminar rol:', error);
+    res.status(500).json({ success: false, message: 'Error al eliminar el rol' });
   }
 };

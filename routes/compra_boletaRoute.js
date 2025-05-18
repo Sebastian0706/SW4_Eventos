@@ -1,15 +1,13 @@
 const express = require('express');
-const compra_boletaController = require('../Controller/compra_boletaController');
-const validateCompra_boleta = require('../middlewares/compra_boletaValidate')
+const compraBoletaController = require('../Controller/compra_boletaController');
+const validateCompraBoleta = require('../middlewares/compra_boletaValidate');
 const router = express.Router();
 
-//rutas
-
-router.get('/', compra_boletaController.index);
-router.get('/create', compra_boletaController.create);
-router.post('/', validateCompra_boleta, compra_boletaController.store);
-router.get('/:id/edit', compra_boletaController.edit);
-router.put('/:id', validateCompra_boleta, compra_boletaController.update);
-router.delete('/:id', compra_boletaController.delete);
+// Rutas para compra_boleta
+router.get('/', compraBoletaController.listarCompraBoletas);
+router.post('/', validateCompraBoleta, compraBoletaController.agregarCompraBoleta);
+router.get('/:id_compro_boleta', compraBoletaController.editarCompraBoleta);
+router.put('/:id_compro_boleta', validateCompraBoleta, compraBoletaController.actualizarCompraBoleta);
+router.delete('/:id_compro_boleta', compraBoletaController.eliminarCompraBoleta);
 
 module.exports = router;
