@@ -1,0 +1,78 @@
+<%- include('../partials/header', { title }) %>
+
+    <div class="container mt-4">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Inicio</a></li>
+                <li class="breadcrumb-item"><a href="/eventos">Eventos</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Detalle del Evento</li>
+            </ol>
+        </nav>
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="card-title mb-0"><i class="fas fa-calendar-alt"></i> Información del Evento</h5>
+                    </div>
+                    <div class="card-body">
+                        <h2 class="card-title">
+                            <%= evento.nombre_evento %>
+                        </h2>
+
+                        <p><strong>Categoría:</strong>
+                            <%= evento.categoria_evento %>
+                        </p>
+                        <p><strong>Género:</strong>
+                            <%= evento.genero_evento %>
+                        </p>
+                        <p><strong>Lugar:</strong>
+                            <%= evento.lugar_evento %>
+                        </p>
+                        <p><strong>Ciudad:</strong>
+                            <%= evento.ciudad_evento %>
+                        </p>
+                        <p><strong>Departamento:</strong>
+                            <%= evento.departamento_evento %>
+                        </p>
+                        <p><strong>Aforo:</strong>
+                            <%= evento.aforo_evento %>
+                        </p>
+                        <p><strong>Fecha de inicio:</strong>
+                            <%= new Date(evento.fecha_inicio_evento).toLocaleDateString() %>
+                        </p>
+                        <p><strong>Fecha de fin:</strong>
+                            <%= new Date(evento.fecha_fin_evento).toLocaleDateString() %>
+                        </p>
+                        <p><strong>Hora de apertura:</strong>
+                            <%= new Date(evento.hora_apertura).toLocaleString() %>
+                        </p>
+                        <p><strong>Edad mínima:</strong>
+                            <%= evento.edad_minima %> años
+                        </p>
+                        <p><strong>ID del artista:</strong>
+                            <%= evento.id_artista_PK %>
+                        </p>
+                        <p><strong>ID del organizador:</strong>
+                            <%= evento.id_organizador_PK %>
+                        </p>
+
+                        <div class="mt-4">
+                            <a href="/eventos/<%= evento.id_evento %>/edit" class="btn btn-warning">
+                                <i class="fas fa-edit"></i> Editar
+                            </a>
+                            <form action="/eventos/<%= evento.id_evento %>?_method=DELETE" method="POST"
+                                class="d-inline">
+                                <button type="submit" class="btn btn-danger"
+                                    onclick="confirmarEliminacion(event, 'evento')">
+                                    <i class="fas fa-trash"></i> Eliminar
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%- include('../partials/footer') %>

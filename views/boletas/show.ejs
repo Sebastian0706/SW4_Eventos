@@ -1,0 +1,60 @@
+<%- include('../partials/header', { title }) %>
+
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1><i class="fas fa-ticket-alt"></i> Detalle de la Boleta</h1>
+            <a href="/boletas" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Volver al listado
+            </a>
+        </div>
+
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-4">ID Boleta</dt>
+                    <dd class="col-sm-8">
+                        <%= boleta.id_boleta %>
+                    </dd>
+
+                    <dt class="col-sm-4">Precio</dt>
+                    <dd class="col-sm-8">$<%= boleta.precio_boleta %>
+                    </dd>
+
+                    <dt class="col-sm-4">Tipo de Boleta</dt>
+                    <dd class="col-sm-8">
+                        <%= boleta.tipo_boleta %>
+                    </dd>
+
+                    <dt class="col-sm-4">Localidad</dt>
+                    <dd class="col-sm-8">
+                        <%= boleta.localidad_boleta %>
+                    </dd>
+
+                    <dt class="col-sm-4">Número de Personas</dt>
+                    <dd class="col-sm-8">
+                        <%= boleta.num_personas %>
+                    </dd>
+
+                    <dt class="col-sm-4">ID del Evento</dt>
+                    <dd class="col-sm-8">
+                        <%= boleta.id_evento_PK %>
+                    </dd>
+                </dl>
+            </div>
+
+            <div class="card-footer d-flex justify-content-end">
+                <a href="/boletas/<%= boleta.id_boleta %>/edit" class="btn btn-warning mr-2">
+                    <i class="fas fa-edit"></i> Editar
+                </a>
+                <form action="/boletas/<%= boleta.id_boleta %>?_method=DELETE" method="POST"
+                    onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta boleta?')">
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fas fa-trash"></i> Eliminar
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <%- include('../partials/footer') %>

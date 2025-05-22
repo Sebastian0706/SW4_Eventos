@@ -5,9 +5,9 @@ const validateBoleta = require('../middlewares/boletaValidate');
 
 
 router.get('/', boletasController.index);
-router.get('/crear', boletasController.create);
+router.get('/create', boletasController.create);
 router.post('/', validateBoleta, boletasController.store);
-router.get('/:id_boleta/editar', boletasController.edit);
+router.get('/:id_boleta/edit', boletasController.edit);
 router.put('/:id_boleta', validateBoleta, boletasController.update);
 router.delete('/:id_boleta', boletasController.delete);
 

@@ -21,7 +21,8 @@ async function initDb() {
     await connection.query(`
       CREATE TABLE IF NOT EXISTS roles (
         id_rol INT AUTO_INCREMENT PRIMARY KEY,
-        nombre_rol VARCHAR(100) NOT NULL
+        nombre_rol VARCHAR(100) NOT NULL,
+        acciones varchar(100) NOT NULL
       )
     `);
 
@@ -54,7 +55,6 @@ async function initDb() {
         ciudad_evento VARCHAR(100) NOT NULL,
         departamento_evento VARCHAR(100) NOT NULL,
         aforo_evento INT NOT NULL,
-        precio_evento DECIMAL NOT NULL,
         fecha_inicio_evento DATE NOT NULL,
         fecha_fin_evento DATE NOT NULL,
         hora_apertura DATETIME NOT NULL,

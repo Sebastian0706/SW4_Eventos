@@ -2,72 +2,58 @@
 
     <div class="container mt-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h1 class="mb-0"><i class="fas fa-calendar-alt"></i> Listado de eventos</h1>
-            <a href="/eventos/create" class="btn btn-primary">
-                <i class="fas fa-plus"></i> Nuevo evento
+            <h1 class="mb-0"><i class="fas fa-shopping-cart"></i> Listado de Ventas</h1>
+            <a href="/ventas/create" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Nueva Venta
             </a>
         </div>
 
         <div class="card shadow-sm">
             <div class="card-body">
-                <% if (eventos && eventos.length> 0) { %>
+                <% if (ventas && ventas.length> 0) { %>
                     <div class="table-responsive">
                         <table class="table table-hover">
                             <thead class="thead-light">
                                 <tr>
                                     <th>ID</th>
-                                    <th>Nombre</th>
-                                    <th>Categoría</th>
-                                    <th>Ciudad</th>
-                                    <th>Fecha Inicio</th>
-                                    <th>Fecha Fin</th>
-                                    <th>Artista</th>
-                                    <th>Organizador</th>
+                                    <th>Valor Total</th>
+                                    <th>Fecha de Venta</th>
+                                    <th>Método de Pago</th>
+                                    <th>ID Compra</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <% eventos.forEach(evento=> { %>
+                                <% ventas.forEach(venta=> { %>
                                     <tr>
                                         <td>
-                                            <%= evento.id_evento %>
+                                            <%= venta.id_venta %>
+                                        </td>
+                                        <td>$<%= venta.valor_total.toLocaleString() %>
                                         </td>
                                         <td>
-                                            <%= evento.nombre_evento %>
+                                            <%= new Date(venta.fecha_venta).toLocaleDateString() %>
                                         </td>
                                         <td>
-                                            <%= evento.categoria_evento %>
+                                            <%= venta.metodo_pago %>
                                         </td>
                                         <td>
-                                            <%= evento.ciudad_evento %>
-                                        </td>
-                                        <td>
-                                            <%= new Date(evento.fecha_inicio_evento).toLocaleDateString() %>
-                                        </td>
-                                        <td>
-                                            <%= new Date(evento.fecha_fin_evento).toLocaleDateString() %>
-                                        </td>
-                                        <td>
-                                            <%= evento.id_artista_PK %>
-                                        </td>
-                                        <td>
-                                            <%= evento.id_organizador_PK %>
+                                            <%= venta.id_compra_PK %>
                                         </td>
                                         <td>
                                             <div class="btn-group btn-group-sm">
-                                                <a href="/eventos/<%= evento.id_evento %>" class="btn btn-info"
+                                                <a href="/ventas/<%= venta.id_venta %>" class="btn btn-info"
                                                     data-toggle="tooltip" title="Ver detalle">
                                                     <i class="fas fa-eye"></i>
                                                 </a>
-                                                <a href="/eventos/<%= evento.id_evento %>/edit" class="btn btn-warning"
+                                                <a href="/ventas/<%= venta.id_venta %>/edit" class="btn btn-warning"
                                                     data-toggle="tooltip" title="Editar">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
-                                                <form action="/eventos/<%= evento.id_evento %>?_method=DELETE"
+                                                <form action="/ventas/<%= venta.id_venta %>?_method=DELETE"
                                                     method="POST" class="d-inline">
                                                     <button type="submit" class="btn btn-danger" data-toggle="tooltip"
-                                                        title="Eliminar"
-                                                        onclick="confirmarEliminacion(event, 'evento')">
+                                                        title="Eliminar" onclick="confirmarEliminacion(event, 'venta')">
                                                         <i class="fas fa-trash"></i>
                                                     </button>
                                                 </form>
@@ -80,8 +66,8 @@
                     </div>
                     <% } else { %>
                         <div class="alert alert-info">
-                            <i class="fas fa-info-circle"></i> No hay eventos registrados.
-                            <a href="/eventos/create" class="alert-link">Registre un nuevo evento</a>.
+                            <i class="fas fa-info-circle"></i> No hay ventas registradas.
+                            <a href="/ventas/create" class="alert-link">Registre una nueva venta</a>.
                         </div>
                         <% } %>
             </div>

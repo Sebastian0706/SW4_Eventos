@@ -34,18 +34,37 @@ exports.store = async (req, res) => {
 };
 
 // Mostrar formulario para editar evento
+// Mostrar formulario para editar evento
 exports.edit = async (req, res) => {
   try {
     const evento = await Evento.getById(req.params.id_evento);
     if (!evento) {
-      return res.status(404).render('error', { title: 'Evento no encontrado', message: 'El evento solicitado no existe.' });
+      return res.status(404).render('error', {
+        title: 'Evento no encontrado',
+        message: 'El evento solicitado no existe.'
+      });
     }
-    res.render('eventos/form', { title: 'Editar Evento', evento, errors: [], isEditing: true });
+
+    // ✅ Asegúrate de que las fechas sean objetos Date (para usar toISOString en EJS)
+    if (evento.fecha_inicio_evento) evento.fecha_inicio_evento = new Date(evento.fecha_inicio_evento);
+    if (evento.fecha_fin_evento) evento.fecha_fin_evento = new Date(evento.fecha_fin_evento);
+    if (evento.hora_apertura) evento.hora_apertura = new Date(evento.hora_apertura);
+
+    res.render('eventos/form', {
+      title: 'Editar Evento',
+      evento,
+      errors: [],
+      isEditing: true
+    });
   } catch (error) {
     console.error('Error al obtener evento:', error);
-    res.status(500).render('error', { title: 'Error', message: 'No se pudo cargar el evento.' });
+    res.status(500).render('error', {
+      title: 'Error',
+      message: 'No se pudo cargar el evento.'
+    });
   }
 };
+
 
 // Actualizar evento
 exports.update = async (req, res) => {
