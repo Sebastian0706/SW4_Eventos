@@ -58,6 +58,19 @@ class Artista {
       throw error;
     }
   }
+
+  static async findByName(nombre_artista) {
+    try {
+      const [rows] = await pool.query(
+        'SELECT * FROM artistas WHERE nombre_artista = ?',
+        [nombre_artista]
+      );
+      return rows[0];
+    } catch (error) {
+      console.error(`Error al buscar artista por nombre: ${nombre_artista}`, error);
+      throw error;
+    }
+  }
 }
 
 module.exports = Artista;

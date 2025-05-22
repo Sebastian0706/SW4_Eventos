@@ -3,7 +3,6 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const methodOverride = require('method-override');
 
-
 const usuariosRoutes = require('./routes/usuariosRoute');
 const eventosRoutes = require('./routes/eventosRoute');
 const ventasRoutes = require('./routes/ventaRoute');
@@ -41,4 +40,10 @@ app.get('/', (req, res) => {
 
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);
+
+app.use((req, res, next) => {
+  res.setHeader("Content-Security-Policy", "default-src 'self'; style-src 'self' https://www.gstatic.com;");
+  next();
+});
+
 });

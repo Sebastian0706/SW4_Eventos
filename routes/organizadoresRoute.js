@@ -1,14 +1,14 @@
 const express = require('express');
-const organizadoresController = require('../Controller/organizadoresController');
-const validateOrganizadores = require('../middlewares/organizadoresValidate');
 const router = express.Router();
+const organizadoresController = require('../Controller/organizadoresController');
+const validateOrganizador = require('../middlewares/organizadoresValidate');
 
-//rutas
 
-router.get('/', organizadoresController.listarOrganizadores);
-router.post('/', validateOrganizadores, organizadoresController.agregarOrganizador);
-router.get('/:id/edit', organizadoresController.editarOrganizador);
-router.put('/:id', validateOrganizadores, organizadoresController.actualizarOrganizador);
-router.delete('/:id', organizadoresController.eliminarOrganizador);
+router.get('/', organizadoresController.index);
+router.get('/create', organizadoresController.create);
+router.post('/', validateOrganizador, organizadoresController.store);
+router.get('/:id_organizador/edit', organizadoresController.edit);
+router.put('/:id_organizador', validateOrganizador, organizadoresController.update);
+router.delete('/:id_organizador', organizadoresController.delete);
 
 module.exports = router;
