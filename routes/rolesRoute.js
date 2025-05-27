@@ -10,5 +10,7 @@ router.post('/', validateRol, rolesController.store);
 router.get('/:id_rol/edit', rolesController.edit);
 router.put('/:id_rol', validateRol, rolesController.update);
 router.delete('/:id_rol', rolesController.delete);
+router.get('/:id_rol', rolesController.show);
+
 
 module.exports = router;

@@ -19,8 +19,6 @@ exports.create = (req, res) => {
     rol: {},
     errors: [],
     isEditing: false,
-    action: '/roles',
-    method: 'POST'
   });
 };
 
@@ -32,14 +30,13 @@ exports.store = async (req, res) => {
       title: 'Crear Rol',
       rol: req.body,
       errors: errors.array(),
-      isEditing: false,
-      action: '/roles',
-      method: 'POST'
+      isEditing: false
     });
   }
 
   try {
-    await Rol.create(req.body.nombre_rol);
+    const { nombre_rol, acciones_rol } = req.body; // Ajustado aquí
+    await Rol.create(nombre_rol, acciones_rol);
     res.redirect('/roles');
   } catch (error) {
     console.error('Error al guardar rol:', error);
@@ -47,12 +44,11 @@ exports.store = async (req, res) => {
       title: 'Crear Rol',
       rol: req.body,
       errors: [{ msg: 'Error al guardar el rol.' }],
-      isEditing: false,
-      action: '/roles',
-      method: 'POST'
+      isEditing: false
     });
   }
 };
+
 
 // Mostrar formulario para editar rol
 exports.edit = async (req, res) => {
@@ -92,7 +88,8 @@ exports.update = async (req, res) => {
   }
 
   try {
-    const success = await Rol.update(id_rol, req.body.nombre_rol);
+    const { nombre_rol, acciones_rol } = req.body; // Ajustado aquí
+    const success = await Rol.update(id_rol, nombre_rol, acciones_rol);
     if (!success) {
       return res.status(404).render('error', { title: 'Rol no encontrado', message: 'El rol que intentas actualizar no existe.' });
     }
@@ -121,5 +118,27 @@ exports.delete = async (req, res) => {
   } catch (error) {
     console.error('Error al eliminar rol:', error);
     res.status(500).json({ success: false, message: 'Error al eliminar el rol' });
+  }
+};
+
+exports.show = async (req, res) => {
+  try {
+    const rol = await Rol.getById(req.params.id_rol);
+    if (!rol) {
+      return res.status(404).render('error', {
+        title: 'Error',
+        message: 'Rol no encontrado.'
+      });
+    }
+    res.render('roles/show', {
+      title: 'Detalle del Rol',
+      rol
+    });
+  } catch (error) {
+    console.error('Error al mostrar detalles del rol:', error);
+    res.status(500).render('error', {
+      title: 'Error',
+      message: 'Error al cargar los detalles del rol.'
+    });
   }
 };
