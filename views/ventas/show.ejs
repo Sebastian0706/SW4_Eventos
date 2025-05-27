@@ -1,0 +1,58 @@
+<%- include('../partials/header', { title }) %>
+
+    <div class="container mt-4">
+        <div class="card shadow-sm">
+            <div class="card-header bg-info text-white">
+                <h4 class="mb-0">
+                    <i class="fas fa-receipt"></i> Detalles de la Venta
+                </h4>
+            </div>
+            <div class="card-body">
+
+                <dl class="row">
+                    <dt class="col-sm-4">ID de Venta</dt>
+                    <dd class="col-sm-8">
+                        <%= venta.id_venta %>
+                    </dd>
+
+                    <dt class="col-sm-4">Valor Total</dt>
+                    <dd class="col-sm-8">$<%= venta.valor_total.toLocaleString() %>
+                    </dd>
+
+                    <dt class="col-sm-4">Fecha de Venta</dt>
+                    <dd class="col-sm-8">
+                        <%= new Date(venta.fecha_venta).toLocaleDateString() %>
+                    </dd>
+
+                    <dt class="col-sm-4">Método de Pago</dt>
+                    <dd class="col-sm-8">
+                        <%= venta.metodo_pago %>
+                    </dd>
+
+                    <dt class="col-sm-4">ID de Compra Asociada</dt>
+                    <dd class="col-sm-8">
+                        <%= venta.id_compra_PK %>
+                    </dd>
+                </dl>
+
+                <div class="d-flex justify-content-between mt-4">
+                    <a href="/ventas" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Volver al listado
+                    </a>
+                    <div class="btn-group">
+                        <a href="/ventas/<%= venta.id_venta %>/edit" class="btn btn-warning">
+                            <i class="fas fa-edit"></i> Editar
+                        </a>
+                        <form action="/ventas/<%= venta.id_venta %>?_method=DELETE" method="POST" class="d-inline">
+                            <button type="submit" class="btn btn-danger" onclick="confirmarEliminacion(event, 'venta')">
+                                <i class="fas fa-trash"></i> Eliminar
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <%- include('../partials/footer') %>

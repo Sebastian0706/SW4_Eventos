@@ -1,13 +1,14 @@
 const express = require('express');
-const compraController = require('../Controller/compraController');
-const validateCompra = require('../middlewares/compraValidate');
 const router = express.Router();
+const comprasController = require('../Controller/compraController');
+const validateCompra = require('../middlewares/compraValidate');
 
-// Rutas para compras
-router.get('/', compraController.listarCompras);
-router.post('/', validateCompra, compraController.agregarCompra);
-router.get('/:id_compra', compraController.editarCompra);
-router.put('/:id_compra', validateCompra, compraController.actualizarCompra);
-router.delete('/:id_compra', compraController.eliminarCompra);
+
+router.get('/', comprasController.index);
+router.get('/create', comprasController.create);
+router.post('/', validateCompra, comprasController.store);
+router.get('/:id_compra/edit', comprasController.edit);
+router.put('/:id_compra', validateCompra, comprasController.update);
+router.delete('/:id_compra', comprasController.delete);
 
 module.exports = router;

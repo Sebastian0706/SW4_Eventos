@@ -1,14 +1,14 @@
 const express = require('express');
-const rolesController = require('../Controller/rolesController');
-const validateRoles = require('../middlewares/rolesValidate');
 const router = express.Router();
+const rolesController = require('../Controller/rolesController');
+const validateRol = require('../middlewares/rolesValidate');
 
-//rutas
 
-router.get('/', rolesController.listarRoles);
-router.post('/', validateRoles, rolesController.agregarRol);
-router.get('/:id', rolesController.editarRol);
-router.put('/:id', validateRoles, rolesController.actualizarRol);
-router.delete('/:id', rolesController.eliminarRol);
+router.get('/', rolesController.index);
+router.get('/create', rolesController.create);
+router.post('/', validateRol, rolesController.store);
+router.get('/:id_rol/edit', rolesController.edit);
+router.put('/:id_rol', validateRol, rolesController.update);
+router.delete('/:id_rol', rolesController.delete);
 
 module.exports = router;

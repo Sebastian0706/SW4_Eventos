@@ -9,7 +9,7 @@ const validateUsuario = [
         .isLength({ min: 2, max: 200 }).withMessage('El apellido debe tener entre 2 y 200 caracteres'),
     body('tipo_documento')
         .notEmpty().withMessage('El tipo de documento es obligatorio')
-        .isLength({ min: 2, max: 100 }).withMessage('El tipo de documento debe tener entre 2 y 100 caracteres de documento válido')
+        .isLength({ min: 2, max: 100 }).withMessage('El tipo de documento debe tener entre 2 y 100 caracteres de documento válido'),
 
 ];
 

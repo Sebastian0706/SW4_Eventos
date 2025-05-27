@@ -37,16 +37,22 @@ class Usuario {
   static async create(usuario) {
     try {
       const { primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, tipo_documento, numero_documento, fecha_nacimiento,
-        celular_usuario, direccion_usuario, nombre_usuario, correo, contrasena, id_rol_PK } = usuario;
-
-      const [result] = await pool.query(
-        `INSERT INTO usuarios (primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, tipo_documento, numero_documento, fecha_nacimiento,
-          celular_usuario, direccion_usuario, nombre_usuario, correo, contrasena, id_rol_PK) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-        [
-          primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, tipo_documento, numero_documento, fecha_nacimiento,
-          celular_usuario, direccion_usuario, nombre_usuario, correo, contrasena, id_rol_PK
-        ]
-      );
+        celular_usuario, direccion_usuario, nombre_usuario, correo, contrasena} = usuario;
+        const id_rol_PK = 1;
+    //       const [result] = await pool.query(
+    //   `INSERT INTO usuarios (
+    //     primer_nombre, segundo_nombre, primer_apellido, segundo_apellido,
+    //     tipo_documento, numero_documento, fecha_nacimiento,
+    //     celular_usuario, direccion_usuario, nombre_usuario,
+    //     correo, contrasena, id_rol_PK
+    //   ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    //   [
+    //     primer_nombre, segundo_nombre, primer_apellido, segundo_apellido,
+    //     tipo_documento, numero_documento, fecha_nacimiento,
+    //     celular_usuario, direccion_usuario, nombre_usuario,
+    //     correo, contrasena, id_rol_PK
+    //   ]
+    // );
       return result.insertId;
     } catch (error) {
       console.error('Error al crear usuario:', error);

@@ -1,0 +1,67 @@
+<%- include('../partials/header', { title: 'Listado de Roles' }) %>
+
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="mb-0"><i class="fas fa-user-shield"></i> Listado de Roles</h1>
+            <a href="/roles/create" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Nuevo Rol
+            </a>
+        </div>
+
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <% if (roles && roles.length> 0) { %>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre del Rol</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% roles.forEach(rol=> { %>
+                                    <tr>
+                                        <td>
+                                            <%= rol.id_rol %>
+                                        </td>
+                                        <td>
+                                            <%= rol.nombre_rol %>
+                                        </td>
+                                        <td>
+                                            <div class="btn-group btn-group-sm">
+                                                <a href="/roles/<%= rol.id_rol %>" class="btn btn-info"
+                                                    data-toggle="tooltip" title="Ver detalle">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                                <a href="/roles/<%= rol.id_rol %>/edit" class="btn btn-warning"
+                                                    data-toggle="tooltip" title="Editar">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <form action="/roles/<%= rol.id_rol %>?_method=DELETE" method="POST"
+                                                    class="d-inline">
+                                                    <button type="submit" class="btn btn-danger" data-toggle="tooltip"
+                                                        title="Eliminar" onclick="confirmarEliminacion(event, 'rol')">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+                    <% } else { %>
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle"></i> No hay roles registrados.
+                            <a href="/roles/create" class="alert-link">Registre un nuevo rol</a>.
+                        </div>
+                        <% } %>
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <%- include('../partials/footer') %>
