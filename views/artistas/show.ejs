@@ -1,44 +1,39 @@
-<%- include('../partials/header', { title }) %>
+<%- include('../partials/header', { title: 'Detalle del Artista' }) %>
 
-    <div class="container mt-4">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/">Inicio</a></li>
-                <li class="breadcrumb-item"><a href="/artistas">Artistas</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Detalle del Artista</li>
-            </ol>
-        </nav>
-
-        <div class="row">
-            <div class="col-md-4">
-                <div class="card shadow-sm mb-4">
-                    <div class="card-header bg-primary text-white">
-                        <h5 class="card-title mb-0"><i class="fas fa-user-graduate"></i> Información del Artista</h5>
-                    </div>
-                    <div class="card-body">
-                        <h2 class="card-title">
-                            <%= artista.nombre %>
-
-                        </h2>
-                        <p class="card-text">
-                            <strong><i class="fas fa-calendar-alt"></i> Fecha de registro:</strong>
-                            <%= new Date(artista.fecha_registro).toLocaleDateString() %>
-                        </p>
-                        <div class="mt-3">
-                            <a href="/artistas/<%= artista.id %>/edit" class="btn btn-warning">
-                                <i class="fas fa-edit"></i> Editar
-                            </a>
-                            <form action="/artistas/<%= artista.id %>?_method=DELETE" method="POST" class="d-inline">
-                                <button type="submit" class="btn btn-danger"
-                                    onclick="confirmarEliminacion(event, 'estudiante')">
-                                    <i class="fas fa-trash"></i> Eliminar
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="container mt-4">
+  <div class="card shadow-sm">
+    <div class="card-header bg-primary text-white">
+      <h4 class="mb-0">
+        <i class="fas fa-user-graduate"></i> Detalle del Artista
+      </h4>
     </div>
+    <div class="card-body">
+      <dl class="row">
+        <dt class="col-sm-3">ID</dt>
+        <dd class="col-sm-9"><%= artista.id_artista %></dd>
 
-    <%- include('../partials/footer') %>
+        <dt class="col-sm-3">Nombre del Artista</dt>
+        <dd class="col-sm-9"><%= artista.nombre_artista %></dd>
+
+      </dl>
+
+      <div class="d-flex justify-content-between mt-4">
+        <a href="/artistas" class="btn btn-secondary">
+          <i class="fas fa-arrow-left"></i> Volver
+        </a>
+        <div class="btn-group">
+          <a href="/artistas/<%= artista.id %>/edit" class="btn btn-warning">
+            <i class="fas fa-edit"></i> Editar
+          </a>
+          <form action="/artistas/<%= artista.id %>?_method=DELETE" method="POST" class="d-inline">
+            <button type="submit" class="btn btn-danger" onclick="confirmarEliminacion(event, 'artista')">
+              <i class="fas fa-trash"></i> Eliminar
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>
