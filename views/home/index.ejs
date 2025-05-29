@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gestor de Eventos</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 text-gray-200 min-h-screen flex flex-col antialiased">
+
+  <!-- Navbar -->
+  <nav class="bg-gray-900 bg-opacity-80 shadow-lg sticky top-0 z-50">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <a class="flex items-center" href="#">
+          <!-- Logo SVG sustituyendo la imagen -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 mr-3 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+            <circle cx="12" cy="12" r="10" />
+            <path d="M12 6v6l4 2" />
+          </svg>
+          <span class="font-extrabold text-2xl text-white tracking-wide">Events</span>
+        </a>
+        <div class="hidden md:flex space-x-6 text-indigo-300 font-medium">
+          <a href="#features" class="hover:text-white transition">Características</a>
+          <a href="#about" class="hover:text-white transition">Acerca</a>
+          <a href="/login" class="hover:text-white transition">Iniciar Sesión</a>
+          <a href="/register" class="hover:text-white transition">Registrarme</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <main class="flex-grow">
+    <section
+      class="container mx-auto px-4 sm:px-6 lg:px-8 py-16 flex flex-col-reverse lg:flex-row items-center justify-between gap-12">
+
+      <div class="text-center lg:text-left max-w-xl">
+        <h1 class="text-5xl font-extrabold mb-6 leading-tight drop-shadow-lg">
+          Organiza tus eventos de forma fácil y profesional
+        </h1>
+        <p class="text-lg text-indigo-200 mb-10">
+          Gestiona invitados, boletas, ventas y artistas en un solo lugar. ¡Todo lo que necesitas para que tu evento sea un éxito!
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
+          <a href="/login"
+            class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-8 rounded-lg shadow-lg transition duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50">
+            Iniciar Sesión
+          </a>
+          <a href="/register"
+            class="border-2 border-indigo-500 text-indigo-300 hover:bg-indigo-500 hover:text-white font-semibold py-3 px-8 rounded-lg shadow-lg transition duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-50">
+            Registrarme
+          </a>
+        </div>
+      </div>
+
+      <div
+        class="max-w-md lg:max-w-lg rounded-xl overflow-hidden shadow-2xl ring-4 ring-indigo-700 ring-opacity-60 flex items-center justify-center bg-indigo-800 bg-opacity-40 p-12">
+        <!-- Logo alusivo como SVG -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-48 h-48 text-indigo-400" fill="none" viewBox="0 0 64 64"
+          stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+          <circle cx="32" cy="32" r="30" />
+          <path d="M20 32h24M32 20v24" />
+          <circle cx="32" cy="32" r="10" />
+        </svg>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="bg-gray-900 bg-opacity-70 py-16">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-4xl font-bold mb-12 text-white drop-shadow-md">¿Por qué elegir Events?</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 max-w-6xl mx-auto">
+
+          <div
+            class="bg-indigo-800 bg-opacity-60 rounded-xl p-6 shadow-lg hover:scale-105 transform transition">
+            <!-- Ícono Calendario Inline SVG -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto mb-4 w-16 h-16 text-indigo-400" fill="none"
+              viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            <h3 class="text-xl font-semibold mb-2">Gestión de Eventos</h3>
+            <p class="text-indigo-300">Crea, edita y organiza todos tus eventos fácilmente.</p>
+          </div>
+
+          <div
+            class="bg-indigo-800 bg-opacity-60 rounded-xl p-6 shadow-lg hover:scale-105 transform transition">
+            <!-- Ícono Boleta/Ticket Inline SVG -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto mb-4 w-16 h-16 text-indigo-400" fill="none"
+              viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6h6v13H9z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 9h6" />
+            </svg>
+            <h3 class="text-xl font-semibold mb-2">Boletas</h3>
+            <p class="text-indigo-300">Administra la venta y distribución de boletas sin complicaciones.</p>
+          </div>
+
+          <div
+            class="bg-indigo-800 bg-opacity-60 rounded-xl p-6 shadow-lg hover:scale-105 transform transition">
+            <!-- Ícono Dinero Inline SVG -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto mb-4 w-16 h-16 text-indigo-400" fill="none"
+              viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" fill="none" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v8m-2-4h4" />
+            </svg>
+            <h3 class="text-xl font-semibold mb-2">Ventas</h3>
+            <p class="text-indigo-300">Controla todas las transacciones con reportes detallados.</p>
+          </div>
+
+          <div
+            class="bg-indigo-800 bg-opacity-60 rounded-xl p-6 shadow-lg hover:scale-105 transform transition">
+            <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto mb-4 w-16 h-16 text-indigo-400" fill="none"
+              viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-2v13" />
+              <circle cx="6" cy="18" r="3" />
+            </svg>
+            <h3 class="text-xl font-semibold mb-2">Artistas</h3>
+            <p class="text-indigo-300">Gestiona los artistas y presentaciones para cada evento.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="container mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center max-w-4xl mx-auto">
+      <h2 class="text-4xl font-bold mb-6 text-white drop-shadow-md">Acerca de Events</h2>
+      <p class="text-indigo-300 text-lg leading-relaxed">
+        Events es una plataforma diseñada para facilitar la gestión integral de eventos, optimizando cada paso,
+        desde la planificación hasta la ejecución. Con una interfaz intuitiva y potente, puedes concentrarte en crear
+        experiencias inolvidables para tus asistentes.
+      </p>
+      <div class="mx-auto mt-10 rounded-lg shadow-xl w-40 h-40 flex items-center justify-center bg-indigo-800 bg-opacity-40">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-24 h-24 text-indigo-400" fill="none" viewBox="0 0 64 64"
+          stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+          <circle cx="32" cy="32" r="30" />
+          <path d="M20 44h24M32 20v24" />
+          <circle cx="32" cy="32" r="10" />
+        </svg>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 bg-opacity-90 text-center py-6 mt-auto text-gray-400 text-sm">
+    <p>&copy; 2025 EventMaster. Todos los derechos reservados.</p>
+  </footer>
+
+</body>
+
+</html>

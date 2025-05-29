@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - Sistema de Autenticación</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-900 min-h-screen flex items-center justify-center px-4 py-8">
+    <div class="max-w-lg w-full bg-gray-800 rounded-xl shadow-2xl p-8 sm:p-10">
+        <h2 class="text-3xl font-bold text-center text-white mb-8">Crear Nueva Cuenta</h2>
+
+        <% if (error) { %>
+            <div class="bg-red-500/20 border-l-4 border-red-500 text-red-300 p-4 mb-6 rounded-md" role="alert">
+                <p class="font-medium">Error:</p>
+                <p><%= error %></p>
+            </div>
+        <% } %>
+
+        <form action="/register" method="POST" class="space-y-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-5">
+                <div>
+                    <label for="primer_nombre" class="block text-gray-400 text-sm font-medium mb-1">Primer nombre</label>
+                    <input type="text" id="primer_nombre" name="primer_nombre" required
+                        class="appearance-none block w-full bg-gray-700 text-gray-200 border border-gray-600 rounded-md py-2.5 px-3 leading-tight focus:outline-none focus:bg-gray-600 focus:border-indigo-500 transition duration-150 ease-in-out">
+                </div>
+                <div>
+                    <label for="segundo_nombre" class="block text-gray-400 text-sm font-medium mb-1">Segundo nombre</label>
+                    <input type="text" id="segundo_nombre" name="segundo_nombre"
+                        class="appearance-none block w-full bg-gray-700 text-gray-200 border border-gray-600 rounded-md py-2.5 px-3 leading-tight focus:outline-none focus:bg-gray-600 focus:border-indigo-500 transition duration-150 ease-in-out">
+                </div>
+                <div>
+                    <label for="primer_apellido" class="block text-gray-400 text-sm font-medium mb-1">Primer apellido</label>
+                    <input type="text" id="primer_apellido" name="primer_apellido" required
+                        class="appearance-none block w-full bg-gray-700 text-gray-200 border border-gray-600 rounded-md py-2.5 px-3 leading-tight focus:outline-none focus:bg-gray-600 focus:border-indigo-500 transition duration-150 ease-in-out">
+                </div>
+                <div>
+                    <label for="segundo_apellido" class="block text-gray-400 text-sm font-medium mb-1">Segundo apellido</label>
+                    <input type="text" id="segundo_apellido" name="segundo_apellido"
+                        class="appearance-none block w-full bg-gray-700 text-gray-200 border border-gray-600 rounded-md py-2.5 px-3 leading-tight focus:outline-none focus:bg-gray-600 focus:border-indigo-500 transition duration-150 ease-in-out">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-5">
+                <div>
+                    <label for="tipo_documento" class="block text-gray-400 text-sm font-medium mb-1">Tipo de documento</label>
+                    <select id="tipo_documento" name="tipo_documento" required
+                        class="appearance-none block w-full bg-gray-700 text-gray-200 border border-gray-600 rounded-md py-2.5 px-3 leading-tight focus:outline-none focus:bg-gray-600 focus:border-indigo-500 transition duration-150 ease-in-out">
+                        <option value="" class="text-gray-400">Seleccione</option>
+                        <option value="CC" class="text-gray-200">Cédula de ciudadania</option>
+                        <option value="TI" class="text-gray-200">Tarjeta de Identidad</option>
+                        <option value="CE" class="text-gray-200">Cédula de Extranjería</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="numero_documento" class="block text-gray-400 text-sm font-medium mb-1">Número de documento</label>
+                    <input type="text" id="numero_documento" name="numero_documento" required
+                        class="appearance-none block w-full bg-gray-700 text-gray-200 border border-gray-600 rounded-md py-2.5 px-3 leading-tight focus:outline-none focus:bg-gray-600 focus:border-indigo-500 transition duration-150 ease-in-out">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-5">
+                <div>
+                    <label for="fecha_nacimiento" class="block text-gray-400 text-sm font-medium mb-1">Fecha de nacimiento</label>
+                    <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" required
+                        class="appearance-none block w-full bg-gray-700 text-gray-200 border border-gray-600 rounded-md py-2.5 px-3 leading-tight focus:outline-none focus:bg-gray-600 focus:border-indigo-500 transition duration-150 ease-in-out [color-scheme:dark]">
+                </div>
+                <div>
+                    <label for="celular_usuario" class="block text-gray-400 text-sm font-medium mb-1">Celular</label>
+                    <input type="tel" id="celular_usuario" name="celular_usuario" required
+                        class="appearance-none block w-full bg-gray-700 text-gray-200 border border-gray-600 rounded-md py-2.5 px-3 leading-tight focus:outline-none focus:bg-gray-600 focus:border-indigo-500 transition duration-150 ease-in-out">
+                </div>
+            </div>
+            
+            <div>
+                <label for="direccion_usuario" class="block text-gray-400 text-sm font-medium mb-1">Dirección</label>
+                <input type="text" id="direccion_usuario" name="direccion_usuario" required
+                    class="appearance-none block w-full bg-gray-700 text-gray-200 border border-gray-600 rounded-md py-2.5 px-3 leading-tight focus:outline-none focus:bg-gray-600 focus:border-indigo-500 transition duration-150 ease-in-out">
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-5">
+                <div>
+                    <label for="id_rol_PK" class="block text-gray-400 text-sm font-medium mb-1">Rol</label>
+                    <select id="id_rol_PK" name="id_rol_PK" required
+                        class="appearance-none block w-full bg-gray-700 text-gray-200 border border-gray-600 rounded-md py-2.5 px-3 leading-tight focus:outline-none focus:bg-gray-600 focus:border-indigo-500 transition duration-150 ease-in-out">
+                        <option value="" class="text-gray-400">Seleccione un rol</option>
+                        <option value="1" class="text-gray-200">Administrador</option>
+                        <option value="2" class="text-gray-200">Empleado</option>
+                        <option value="3" class="text-gray-200">Cliente</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="nombre_usuario" class="block text-gray-400 text-sm font-medium mb-1">Nombre de usuario</label>
+                    <input type="text" id="nombre_usuario" name="nombre_usuario"
+                        value="<%= typeof nombre_usuario !== 'undefined' ? nombre_usuario : '' %>" required
+                        class="appearance-none block w-full bg-gray-700 text-gray-200 border border-gray-600 rounded-md py-2.5 px-3 leading-tight focus:outline-none focus:bg-gray-600 focus:border-indigo-500 transition duration-150 ease-in-out">
+                </div>
+            </div>
+
+            <div>
+                <label for="correo" class="block text-gray-400 text-sm font-medium mb-1">Correo electrónico</label>
+                <input type="email" id="correo" name="correo" value="<%= typeof correo !== 'undefined' ? correo : '' %>" required
+                    class="appearance-none block w-full bg-gray-700 text-gray-200 border border-gray-600 rounded-md py-2.5 px-3 leading-tight focus:outline-none focus:bg-gray-600 focus:border-indigo-500 transition duration-150 ease-in-out">
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-5">
+                <div>
+                    <label for="contrasena" class="block text-gray-400 text-sm font-medium mb-1">Contraseña</label>
+                    <input type="password" id="contrasena" name="contrasena" required
+                        class="appearance-none block w-full bg-gray-700 text-gray-200 border border-gray-600 rounded-md py-2.5 px-3 leading-tight focus:outline-none focus:bg-gray-600 focus:border-indigo-500 transition duration-150 ease-in-out">
+                </div>
+                 <div>
+                    <label for="confirmcontrasena" class="block text-gray-400 text-sm font-medium mb-1">Confirmar contraseña</label>
+                    <input type="password" id="confirmcontrasena" name="confirmcontrasena" required
+                        class="appearance-none block w-full bg-gray-700 text-gray-200 border border-gray-600 rounded-md py-2.5 px-3 leading-tight focus:outline-none focus:bg-gray-600 focus:border-indigo-500 transition duration-150 ease-in-out">
+                </div>
+            </div>
+
+            <div>
+                <button type="submit"
+                    class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-md focus:outline-none focus:shadow-outline transition duration-150 ease-in-out transform hover:scale-105">
+                    Registrarse
+                </button>
+            </div>
+
+            <div class="text-center">
+                <p class="text-sm text-gray-400">¿Ya tienes una cuenta? <a href="/login"
+                        class="font-medium text-indigo-400 hover:text-indigo-300 hover:underline">Iniciar sesión</a></p>
+            </div>
+        </form>
+         <div class="mt-6">
+      <a href="/" class="block w-full text-center bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-4 rounded-md focus:outline-none focus:shadow-outline transition duration-150 ease-in-out transform hover:scale-105">
+        Regresar al Home
+      </a>
+    </div>
+    </div>
+    <script src="/public/validarRegistro.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Iniciar Sesión - Events</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body
+  class="bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 min-h-screen flex items-center justify-center px-4 py-12 text-gray-200 antialiased">
+
+  <div class="max-w-md w-full bg-gray-900 bg-opacity-80 rounded-2xl shadow-2xl p-10 sm:p-12 ring-4 ring-indigo-700 ring-opacity-60">
+
+    <!-- Logo alusivo arriba -->
+    <div class="flex justify-center mb-8">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-20 h-20 text-indigo-400" fill="none" viewBox="0 0 64 64"
+        stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+        <circle cx="32" cy="32" r="30" />
+        <path d="M20 44h24M32 20v24" />
+        <circle cx="32" cy="32" r="10" />
+      </svg>
+    </div>
+
+    <h2 class="text-3xl font-extrabold text-center mb-8 tracking-tight drop-shadow-lg">Iniciar Sesión</h2>
+
+    <% if (typeof error !== 'undefined' && error) { %>
+      <div class="bg-red-500/20 border-l-4 border-red-500 text-red-300 p-4 mb-6 rounded-md" role="alert">
+        <p class="font-semibold">Error:</p>
+        <p><%= error %></p>
+      </div>
+    <% } %>
+
+    <% if (typeof success !== 'undefined' && success) { %>
+      <div class="bg-green-500/20 border-l-4 border-green-500 text-green-300 p-4 mb-6 rounded-md" role="alert">
+        <p class="font-semibold">Éxito:</p>
+        <p><%= success %></p>
+      </div>
+    <% } %>
+
+    <form action="/login" method="POST" class="space-y-6">
+
+      <div>
+        <label for="email" class="block text-indigo-300 text-sm font-semibold mb-1">Correo electrónico</label>
+        <input type="email" id="email" name="correo"
+          value="<%= typeof correo !== 'undefined' ? correo : '' %>"
+          class="appearance-none block w-full bg-indigo-900 bg-opacity-60 text-indigo-100 border border-indigo-600 rounded-lg py-3 px-4 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:bg-indigo-800 transition duration-150 ease-in-out"
+          placeholder="tu@correo.com" required />
+      </div>
+
+      <div>
+        <label for="password" class="block text-indigo-300 text-sm font-semibold mb-1">Contraseña</label>
+        <input type="password" id="password" name="contrasena"
+          class="appearance-none block w-full bg-indigo-900 bg-opacity-60 text-indigo-100 border border-indigo-600 rounded-lg py-3 px-4 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:bg-indigo-800 transition duration-150 ease-in-out"
+          placeholder="********" required />
+      </div>
+
+      <div>
+        <button type="submit"
+          class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold py-3 rounded-lg shadow-lg focus:outline-none focus:ring-4 focus:ring-indigo-500 focus:ring-opacity-50 transition duration-200 transform hover:scale-105">
+          Iniciar sesión
+        </button>
+      </div>
+
+      <div class="text-center pt-3">
+        <p class="text-indigo-300 text-sm">
+          ¿No tienes una cuenta?
+          <a href="/register" class="font-semibold text-indigo-400 hover:text-indigo-300 hover:underline">Registrarse</a>
+        </p>
+      </div>
+    </form>
+
+    <!-- Botón de regresar al home -->
+    <div class="mt-8">
+      <a href="/"
+        class="block w-full text-center bg-indigo-800 hover:bg-indigo-900 text-indigo-200 font-semibold py-3 rounded-lg shadow-md focus:outline-none focus:ring-4 focus:ring-indigo-400 focus:ring-opacity-50 transition duration-200 transform hover:scale-105">
+        Regresar al Home
+      </a>
+    </div>
+
+  </div>
+
+</body>
+
+</html>

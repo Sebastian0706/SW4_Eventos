@@ -5,7 +5,7 @@ const Rol = require('../models/rolesModels');
 exports.index = async (req, res) => {
   try {
     const roles = await Rol.getAll();
-    res.render('roles/index', { title: 'Listado de Roles', roles });
+    res.render('admin/roles/index', { title: 'Listado de Roles', roles });
   } catch (error) {
     console.error('Error al obtener roles:', error);
     res.status(500).render('error', { title: 'Error', message: 'No se pudieron cargar los roles.' });
@@ -14,7 +14,7 @@ exports.index = async (req, res) => {
 
 // Mostrar formulario para crear rol
 exports.create = (req, res) => {
-  res.render('roles/form', {
+  res.render('admin/roles/form', {
     title: 'Crear Rol',
     rol: {},
     errors: [],
@@ -26,7 +26,7 @@ exports.create = (req, res) => {
 exports.store = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.render('roles/form', {
+    return res.render('admin/roles/form', {
       title: 'Crear Rol',
       rol: req.body,
       errors: errors.array(),
@@ -35,12 +35,14 @@ exports.store = async (req, res) => {
   }
 
   try {
-    const { nombre_rol, acciones_rol } = req.body; // Ajustado aquí
-    await Rol.create(nombre_rol, acciones_rol);
-    res.redirect('/roles');
+    const { nombre_rol, acciones_rol } = req.body;
+    const nuevoId = await Rol.create(nombre_rol, acciones_rol);
+
+    // Redirigir al detalle del nuevo rol creado con prefijo /admin
+    res.redirect(`/admin/roles/${nuevoId}`);
   } catch (error) {
     console.error('Error al guardar rol:', error);
-    res.render('roles/form', {
+    res.render('admin/roles/form', {
       title: 'Crear Rol',
       rol: req.body,
       errors: [{ msg: 'Error al guardar el rol.' }],
@@ -49,7 +51,6 @@ exports.store = async (req, res) => {
   }
 };
 
-
 // Mostrar formulario para editar rol
 exports.edit = async (req, res) => {
   try {
@@ -57,12 +58,12 @@ exports.edit = async (req, res) => {
     if (!rol) {
       return res.status(404).render('error', { title: 'Rol no encontrado', message: 'El rol solicitado no existe.' });
     }
-    res.render('roles/form', {
+    res.render('admin/roles/form', {
       title: 'Editar Rol',
       rol,
       errors: [],
       isEditing: true,
-      action: `/roles/${rol.id_rol}?_method=PUT`,
+      action: `/admin/roles/${rol.id_rol}?_method=PUT`,
       method: 'PUT'
     });
   } catch (error) {
@@ -77,31 +78,32 @@ exports.update = async (req, res) => {
   const id_rol = req.params.id_rol;
 
   if (!errors.isEmpty()) {
-    return res.render('roles/form', {
+    return res.render('admin/roles/form', {
       title: 'Editar Rol',
       rol: { ...req.body, id_rol },
       errors: errors.array(),
       isEditing: true,
-      action: `/roles/${id_rol}?_method=PUT`,
+      action: `/admin/roles/${id_rol}?_method=PUT`,
       method: 'PUT'
     });
   }
 
   try {
-    const { nombre_rol, acciones_rol } = req.body; // Ajustado aquí
+    const { nombre_rol, acciones_rol } = req.body;
     const success = await Rol.update(id_rol, nombre_rol, acciones_rol);
     if (!success) {
       return res.status(404).render('error', { title: 'Rol no encontrado', message: 'El rol que intentas actualizar no existe.' });
     }
-    res.redirect('/roles');
+    // Redirigir a listado con prefijo /admin
+    res.redirect('/admin/roles');
   } catch (error) {
     console.error('Error al actualizar rol:', error);
-    res.render('roles/form', {
+    res.render('admin/roles/form', {
       title: 'Editar Rol',
       rol: { ...req.body, id_rol },
       errors: [{ msg: 'Error al actualizar el rol.' }],
       isEditing: true,
-      action: `/roles/${id_rol}?_method=PUT`,
+      action: `/admin/roles/${id_rol}?_method=PUT`,
       method: 'PUT'
     });
   }
@@ -114,13 +116,15 @@ exports.delete = async (req, res) => {
     if (!success) {
       return res.status(404).json({ success: false, message: 'Rol no encontrado' });
     }
-    res.redirect('/roles');
+    // Redirigir a listado con prefijo /admin
+    res.redirect('/admin/roles');
   } catch (error) {
     console.error('Error al eliminar rol:', error);
     res.status(500).json({ success: false, message: 'Error al eliminar el rol' });
   }
 };
 
+// Mostrar detalle del rol
 exports.show = async (req, res) => {
   try {
     const rol = await Rol.getById(req.params.id_rol);
@@ -130,7 +134,7 @@ exports.show = async (req, res) => {
         message: 'Rol no encontrado.'
       });
     }
-    res.render('roles/show', {
+    res.render('admin/roles/show', {
       title: 'Detalle del Rol',
       rol
     });

@@ -17,17 +17,18 @@ class Rol {
   }
 
   static async create(nombre_rol, acciones_rol) {
-    const [result] = await pool.query(
-      'INSERT INTO roles (nombre_rol, acciones) VALUES (?, ?)',
-      [nombre_rol, acciones_rol]
-    );
-    return result.insertId;
-  }
-
-
- static async update(id_rol, nombre_rol, acciones_rol) {
   const [result] = await pool.query(
-    'UPDATE roles SET nombre_rol = ?, acciones = ? WHERE id_rol = ?',
+    'INSERT INTO roles (nombre_rol, acciones_rol) VALUES (?, ?)',
+    [nombre_rol, acciones_rol]
+  );
+  return result.insertId;
+}
+
+
+
+static async update(id_rol, nombre_rol, acciones_rol) {
+  const [result] = await pool.query(
+    'UPDATE roles SET nombre_rol = ?, acciones_rol = ? WHERE id_rol = ?',
     [nombre_rol, acciones_rol, id_rol]
   );
   return result.affectedRows > 0;

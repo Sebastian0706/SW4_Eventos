@@ -1,0 +1,78 @@
+<%- include('../partials/header', { title }) %>
+
+    <div class="container mx-auto mt-8 px-4 max-w-4xl">
+        <nav class="mb-6 text-gray-300 text-sm" aria-label="breadcrumb">
+            <ol class="flex flex-wrap gap-2">
+                <li><a href="/admin" class="hover:underline text-blue-500">Inicio</a></li>
+                <li>/</li>
+                <li><a href="/admin/eventos" class="hover:underline text-blue-500">Eventos</a></li>
+                <li>/</li>
+                <li class="text-gray-400" aria-current="page">Detalle del Evento</li>
+            </ol>
+        </nav>
+
+        <div class="bg-gray-800 rounded shadow-md overflow-hidden">
+            <div class="bg-blue-700 px-6 py-4">
+                <h5 class="text-white text-lg font-semibold flex items-center gap-2">
+                    <i class="fas fa-calendar-alt"></i> Información del Evento
+                </h5>
+            </div>
+            <div class="p-6 text-gray-200 space-y-3">
+                <h2 class="text-3xl font-bold text-white">
+                    <%= evento.nombre_evento %>
+                </h2>
+
+                <p><strong class="font-semibold">Categoría:</strong>
+                    <%= evento.categoria_evento %>
+                </p>
+                <p><strong class="font-semibold">Género:</strong>
+                    <%= evento.genero_evento %>
+                </p>
+                <p><strong class="font-semibold">Lugar:</strong>
+                    <%= evento.lugar_evento %>
+                </p>
+                <p><strong class="font-semibold">Ciudad:</strong>
+                    <%= evento.ciudad_evento %>
+                </p>
+                <p><strong class="font-semibold">Departamento:</strong>
+                    <%= evento.departamento_evento %>
+                </p>
+                <p><strong class="font-semibold">Aforo:</strong>
+                    <%= evento.aforo_evento %>
+                </p>
+                <p><strong class="font-semibold">Fecha de inicio:</strong>
+                    <%= new Date(evento.fecha_inicio_evento).toLocaleDateString() %>
+                </p>
+                <p><strong class="font-semibold">Fecha de fin:</strong>
+                    <%= new Date(evento.fecha_fin_evento).toLocaleDateString() %>
+                </p>
+                <p><strong class="font-semibold">Hora de apertura:</strong>
+                    <%= evento.hora_apertura %>
+                </p>
+                <p><strong class="font-semibold">Edad mínima:</strong>
+                    <%= evento.edad_minima %> años
+                </p>
+                <p><strong class="font-semibold">ID del artista:</strong>
+                    <%= evento.id_artista_PK %>
+                </p>
+                <p><strong class="font-semibold">ID del organizador:</strong>
+                    <%= evento.id_organizador_PK %>
+                </p>
+
+                <div class="mt-6 flex flex-wrap gap-4">
+                    <a href="/eventos/<%= evento.id_evento %>/edit"
+                        class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-semibold px-4 py-2 rounded flex items-center gap-2 shadow transition">
+                        <i class="fas fa-edit"></i> Editar
+                    </a>
+                    <form action="/eventos/<%= evento.id_evento %>?_method=DELETE" method="POST" class="inline">
+                        <button type="submit" onclick="confirmarEliminacion(event, 'evento')"
+                            class="bg-red-600 hover:bg-red-700 text-white font-semibold px-4 py-2 rounded flex items-center gap-2 shadow transition">
+                            <i class="fas fa-trash"></i> Eliminar
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%- include('../partials/footer') %>

@@ -1,0 +1,69 @@
+<%- include('../../partials/header', { title, user: user }) %>
+
+  <div class="container mt-4">
+    <div class="card shadow-sm">
+      <div class="card-header bg-primary text-white">
+        <h4 class="mb-0">
+          <i class="fas fa-<%= isEditing ? 'edit' : 'plus' %>"></i>
+          <%= isEditing ? 'Editar' : 'Registrar' %> Venta
+        </h4>
+      </div>
+      <div class="card-body">
+        <% if (errors && errors.length> 0) { %>
+          <div class="alert alert-danger">
+            <h5 class="alert-heading"><i class="fas fa-exclamation-triangle"></i> Errores de validación</h5>
+            <ul class="mb-0">
+              <% errors.forEach(error=> { %>
+                <li>
+                  <%= error.msg %>
+                </li>
+                <% }); %>
+            </ul>
+          </div>
+          <% } %>
+
+            <form action="<%= isEditing ? `/ventas/${venta.id_venta}?_method=PUT` : '/ventas' %>" method="POST">
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="valor_total">Valor Total</label>
+                  <input type="number" class="form-control" id="valor_total" name="valor_total"
+                    value="<%= venta.valor_total || '' %>" required>
+                </div>
+
+                <div class="form-group col-md-6">
+                  <label for="fecha_venta">Fecha de Venta</label>
+                  <input type="date" class="form-control" id="fecha_venta" name="fecha_venta"
+                    value="<%= venta.fecha_venta ? venta.fecha_venta.toISOString().split('T')[0] : '' %>" required>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="metodo_pago">Método de Pago</label>
+                  <input type="text" class="form-control" id="metodo_pago" name="metodo_pago"
+                    value="<%= venta.metodo_pago || '' %>" required>
+                </div>
+
+                <div class="form-group col-md-6">
+                  <label for="id_compra_PK">ID de Compra</label>
+                  <input type="number" class="form-control" id="id_compra_PK" name="id_compra_PK"
+                    value="<%= venta.id_compra_PK || '' %>" required>
+                </div>
+              </div>
+
+              <div class="form-group d-flex justify-content-between mt-3">
+                <a href="/admin/ventas" class="btn btn-secondary">
+                  <i class="fas fa-arrow-left"></i> Cancelar
+                </a>
+                <button type="submit" class="btn btn-primary">
+                  <i class="fas fa-save"></i>
+                  <%= isEditing ? 'Actualizar' : 'Guardar' %>
+                </button>
+              </div>
+            </form>
+      </div>
+    </div>
+  </div>
+
+  <br>
+  <%- include('../../partials/footer') %>

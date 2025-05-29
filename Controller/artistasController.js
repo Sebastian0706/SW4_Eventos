@@ -5,7 +5,7 @@ const Artista = require('../models/artistasModels');
 exports.index = async (req, res) => {
   try {
     const artistas = await Artista.getAll();
-    res.render('artistas/index', {
+    res.render('admin/artistas/index', {
       title: 'Listado de Artistas',
       artistas
     });
@@ -20,7 +20,7 @@ exports.index = async (req, res) => {
 
 // Mostrar formulario para crear un nuevo artista
 exports.create = (req, res) => {
-  res.render('artistas/form', {
+  res.render('admin/artistas/form', {
     title: 'Registrar Artista',
     artista: {},
     errors: [],
@@ -32,7 +32,7 @@ exports.create = (req, res) => {
 exports.store = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.render('artistas/form', {
+    return res.render('admin/artistas/form', {
       title: 'Registrar Artista',
       artista: req.body,
       errors: errors.array(),
@@ -42,10 +42,10 @@ exports.store = async (req, res) => {
 
   try {
     await Artista.create(req.body);
-    res.redirect('/artistas');
+    res.redirect('/admin/artistas');
   } catch (error) {
     console.error('Error al guardar artista:', error);
-    res.render('artistas/form', {
+    res.render('admin/artistas/form', {
       title: 'Registrar Artista',
       artista: req.body,
       errors: [{ msg: 'Error al guardar el artista. Verifique los datos ingresados.' }],
@@ -64,7 +64,7 @@ exports.edit = async (req, res) => {
         message: 'Artista no encontrado.'
       });
     }
-    res.render('artistas/form', {
+    res.render('admin/artistas/form', {
       title: 'Editar Artista',
       artista,
       errors: [],
@@ -85,7 +85,7 @@ exports.update = async (req, res) => {
   const artistaData = { ...req.body, id_artista: req.params.id_artista };
 
   if (!errors.isEmpty()) {
-    return res.render('artistas/form', {
+    return res.render('admin/artistas/form', {
       title: 'Editar Artista',
       artista: artistaData,
       errors: errors.array(),
@@ -101,10 +101,10 @@ exports.update = async (req, res) => {
         message: 'Artista no encontrado.'
       });
     }
-    res.redirect('/artistas');
+    res.redirect('/admin/artistas');
   } catch (error) {
     console.error('Error al actualizar artista:', error);
-    res.render('artistas/form', {
+    res.render('admin/artistas/form', {
       title: 'Editar Artista',
       artista: artistaData,
       errors: [{ msg: 'Error al actualizar el artista. Verifique los datos ingresados.' }],
@@ -123,7 +123,7 @@ exports.delete = async (req, res) => {
         message: 'Artista no encontrado.'
       });
     }
-    res.redirect('/artistas');
+    res.redirect('/admin/artistas');
   } catch (error) {
     console.error('Error al eliminar artista:', error);
     res.status(500).render('error', {
@@ -143,7 +143,7 @@ exports.show = async (req, res) => {
         message: 'Artista no encontrado.'
       });
     }
-    res.render('artistas/show', {
+    res.render('admin/artistas/show', {
       title: 'Detalle del Artista',
       artista
     });

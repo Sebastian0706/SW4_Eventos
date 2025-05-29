@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Sistema de Autenticación</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+  <nav class="bg-white shadow-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16">
+        <div class="flex items-center">
+          <h1 class="text-xl font-bold">Sistema de Autenticación</h1>
+        </div>
+        <div class="flex items-center space-x-4">
+          <a href="/admin" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Ir al Admin
+          </a>
+          <span class="text-gray-700">Bienvenido, <%= user.nombre_usuario %></span>
+          <a href="/logout" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+            Cerrar sesión
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  
+  <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+    <div class="px-4 py-6 sm:px-0">
+      <div class="border-4 border-dashed border-gray-200 rounded-lg h-96 p-6">
+        <h2 class="text-2xl font-bold mb-6">Panel de Control</h2>
+        <div class="bg-white shadow overflow-hidden sm:rounded-lg p-6">
+          <p class="text-lg">Email: <%= user.correo %></p>
+          <p class="mt-4 text-gray-600">Acceso concedido mediante autenticación JWT.</p>
+          <p class="mt-2 text-gray-600">Este es un área protegida de la aplicación.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

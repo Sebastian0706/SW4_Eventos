@@ -2,116 +2,114 @@
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
         <%= title %> - Sistema de Eventos
     </title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/styles.css">
-
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
     <style>
-        /* Estilos para asegurar consistencia con el Index Canvas */
         body {
             font-family: 'Poppins', sans-serif;
-            /* El color de fondo se aplicará en la página principal, no es necesario aquí si es un partial */
-        }
-
-        .custom-navbar {
-            background-color: #2c3e50;
-            /* Azul medianoche, como el jumbotron */
-            padding-top: 0.8rem;
-            padding-bottom: 0.8rem;
-        }
-
-        .custom-navbar .navbar-brand {
-            font-weight: 700;
-            font-size: 1.5rem;
-            color: #ffffff;
-        }
-
-        .custom-navbar .navbar-brand:hover {
-            color: #1abc9c;
-            /* Turquesa al pasar el mouse */
-        }
-
-        .custom-navbar .navbar-brand i {
-            margin-right: 8px;
-            color: #1abc9c;
-            /* Icono del brand en Turquesa */
-        }
-
-        .custom-navbar .nav-link {
-            color: rgba(255, 255, 255, 0.85);
-            font-weight: 500;
-            margin-left: 0.5rem;
-            margin-right: 0.5rem;
-            transition: color 0.3s ease;
-        }
-
-        .custom-navbar .nav-link:hover,
-        .custom-navbar .nav-item.active .nav-link {
-            /* Para el item activo */
-            color: #ffffff;
-            text-decoration: none;
-            /* Opcional: quitar subrayado */
-        }
-
-        .custom-navbar .nav-link i {
-            margin-right: 6px;
-        }
-
-        .navbar-toggler {
-            border-color: rgba(255, 255, 255, 0.5);
-        }
-
-        .navbar-toggler-icon {
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 0.85)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
         }
     </style>
 </head>
 
-<body>
-    <nav class="navbar navbar-expand-lg custom-navbar">
-        <div class="container">
-            <a class="navbar-brand" href="/">
-                <i class="fas fa-ticket-alt"></i> Sistema de Eventos
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/"><i class="fas fa-home"></i> Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/eventos"><i class="fas fa-calendar-alt"></i> Eventos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/artistas"><i class="fas fa-star"></i> Artistas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/boletas">
-                            <i class="fas fa-ticket-alt"></i> Boletas
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/usuarios">
-                            <i class="fas fa-user"></i> Usuarios
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/ventas">
-                            <i class="fas fa-shopping-cart"></i> Ventas
-                        </a>
-                    </li>
+<body class="bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 text-gray-200 min-h-screen antialiased">
+    <!-- Navbar -->
+    <nav class="bg-gray-900 bg-opacity-80 shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Brand -->
+                <a class="flex items-center text-white hover:text-teal-400 transition-colors duration-300"
+                    href="/admin">
+                    <i class="fas fa-ticket-alt text-teal-400 text-xl mr-2"></i>
+                    <span class="font-bold text-xl tracking-wide">Sistema de Eventos</span>
+                </a>
 
-                </ul>
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button type="button" id="mobile-menu-button"
+                        class="text-gray-300 hover:text-white focus:outline-none focus:text-white transition-colors duration-300">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Desktop menu -->
+                <div class="hidden md:flex md:items-center md:space-x-6">
+                    <!-- Siempre mostrar Inicio -->
+                    <a href="/admin"
+                        class="text-gray-300 hover:text-white font-medium transition-colors duration-300 flex items-center">
+                        <i class="fas fa-home mr-2"></i>
+                        Inicio
+                    </a>
+
+                    <% if (user) { %>
+                    <!-- Usuario logueado -->
+                    <div class="flex items-center space-x-4 ml-8">
+                        <span class="text-white font-semibold text-base">
+                            Bienvenido, <%= user.nombre_usuario %>
+                        </span>
+                        <a href="/logout"
+                            class="bg-red-600 hover:bg-red-700 text-white font-semibold px-4 py-2 rounded-lg transition-colors duration-200 shadow-md hover:shadow-lg">
+                            Cerrar sesión
+                        </a>
+                    </div>
+                    <% } else { %>
+                    <!-- Usuario NO logueado: aquí no mostramos nombre ni cierre, solo puedes agregar botones si quieres -->
+                    <% } %>
+                </div>
+            </div>
+
+            <!-- Mobile menu -->
+            <div id="mobile-menu" class="md:hidden hidden">
+                <div class="px-2 pt-2 pb-3 space-y-1 border-t border-gray-700 mt-4">
+                    <!-- Siempre mostrar Inicio -->
+                    <a href="/admin"
+                        class="text-gray-300 hover:text-white block px-3 py-2 font-medium transition-colors duration-300">
+                        <i class="fas fa-home mr-2"></i>
+                        Inicio
+                    </a>
+
+                    <% if (user) { %>
+                    <!-- Usuario logueado -->
+                    <div class="px-3 py-2 border-t border-gray-600 mt-4">
+                        <span class="text-white font-semibold block mb-3">
+                            Bienvenido, <%= user.nombre_usuario %>
+                        </span>
+                        <a href="/logout"
+                            class="bg-red-600 hover:bg-red-700 text-white font-semibold px-4 py-2 rounded-lg transition-colors duration-200 inline-block">
+                            Cerrar sesión
+                        </a>
+                    </div>
+                    <% } else { %>
+                    <!-- Botones para no autenticados -->
+                    <a href="/login"
+                        class="text-gray-300 hover:text-white block px-3 py-2 font-medium transition-colors duration-300">
+                        Iniciar Sesión
+                    </a>
+                    <a href="/register"
+                        class="text-gray-300 hover:text-white block px-3 py-2 font-medium transition-colors duration-300">
+                        Registrarme
+                    </a>
+                    <% } %>
+                </div>
             </div>
         </div>
     </nav>
-    <main class="content-wrap">
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function () {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+</body>
+
+</html>

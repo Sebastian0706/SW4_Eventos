@@ -1,0 +1,83 @@
+<%- include('../../partials/header', { title, user: user }) %>
+
+    <div class="container mx-auto mt-8 px-4">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-2xl font-semibold text-gray-100 flex items-center gap-2">
+                <i class="fas fa-user-shield"></i> Listado de Roles
+            </h1>
+            <a href="/admin/roles/create"
+                class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md shadow focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors">
+                <i class="fas fa-plus mr-2"></i> Nuevo Rol
+            </a>
+        </div>
+
+        <div class="bg-gray-800 rounded-lg shadow-md overflow-hidden">
+            <div class="p-6">
+                <% if (roles && roles.length> 0) { %>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-700">
+                            <thead class="bg-gray-900">
+                                <tr>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                                        ID
+                                    </th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                                        Nombre del Rol
+                                    </th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                                        Acciones
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-gray-800 divide-y divide-gray-700">
+                                <% roles.forEach(rol=> { %>
+                                    <tr class="hover:bg-gray-700">
+                                        <td class="px-6 py-4 whitespace-nowrap text-gray-300">
+                                            <%= rol.id_rol %>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-gray-100">
+                                            <%= rol.nombre_rol %>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="inline-flex space-x-2">
+                                                <a href="/admin/roles/<%= rol.id_rol %>"
+                                                    class="px-3 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded-md text-sm flex items-center"
+                                                    title="Ver detalle">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                                <a href="/admin/roles/<%= rol.id_rol %>/edit"
+                                                    class="px-3 py-1 bg-yellow-500 hover:bg-yellow-600 text-white rounded-md text-sm flex items-center"
+                                                    title="Editar">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <form action="/admin/roles/<%= rol.id_rol %>?_method=DELETE"
+                                                    method="POST" onsubmit="return confirmarEliminacion(event, 'rol')">
+                                                    <button type="submit"
+                                                        class="px-3 py-1 bg-red-600 hover:bg-red-700 text-white rounded-md text-sm flex items-center"
+                                                        title="Eliminar">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <% }); %>
+                            </tbody>
+                        </table>
+                    </div>
+                    <% } else { %>
+                        <div class="bg-blue-900 text-blue-200 p-4 rounded-md flex items-center gap-2">
+                            <i class="fas fa-info-circle text-xl"></i>
+                            <span>No hay roles registrados. <a href="/admin/roles/create"
+                                    class="underline hover:text-blue-400">Registre un nuevo rol</a>.</span>
+                        </div>
+                        <% } %>
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <%- include('../../partials/footer') %>
