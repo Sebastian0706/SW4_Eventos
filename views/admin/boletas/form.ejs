@@ -1,71 +1,98 @@
 <%- include('../../partials/header', { title, user: user }) %>
 
-    <div class="container mt-4">
-        <div class="card shadow-sm">
-            <div class="card-header bg-primary text-white">
-                <h4 class="mb-0">
-                    <i class="fas fa-<%= isEditing ? 'edit' : 'plus' %>"></i>
+    <div class="container mx-auto mt-8 px-4">
+        <div class="bg-gray-800 text-gray-100 rounded-lg shadow-md overflow-hidden">
+            <!-- Header del formulario -->
+            <div class="bg-gray-900 text-white px-6 py-4">
+                <h4 class="text-xl font-semibold mb-0 flex items-center">
+                    <i class="fas fa-<%= isEditing ? 'edit' : 'plus' %> mr-2"></i>
                     <%= isEditing ? 'Editar' : 'Registrar' %> Boleta
                 </h4>
             </div>
-            <div class="card-body">
+
+            <!-- Cuerpo del formulario -->
+            <div class="p-6">
+                <!-- Mensajes de error -->
                 <% if (errors && errors.length> 0) { %>
-                    <div class="alert alert-danger">
-                        <h5 class="alert-heading">
-                            <i class="fas fa-exclamation-triangle"></i> Errores de validación
-                        </h5>
-                        <ul class="mb-0">
+                    <div class="bg-red-800/20 border border-red-800 rounded-md p-4 mb-6">
+                        <div class="flex items-center mb-2">
+                            <i class="fas fa-exclamation-triangle text-red-400 mr-2"></i>
+                            <h5 class="text-red-300 font-medium">Errores de validación</h5>
+                        </div>
+                        <ul class="text-red-400 text-sm space-y-1 ml-6">
                             <% errors.forEach(error=> { %>
-                                <li>
+                                <li class="list-disc">
                                     <%= error.msg %>
                                 </li>
-                                <% }); %>
+                                <% }) %>
                         </ul>
                     </div>
                     <% } %>
 
-                        <form action="<%= isEditing ? `/boletas/${boleta.id_boleta}?_method=PUT` : '/boletas' %>"
+                        <!-- Formulario -->
+                        <form
+                            action="<%= isEditing ? `/admin/boletas/${boleta.id_boleta}?_method=PUT` : '/admin/boletas' %>"
                             method="POST">
-                            <div class="form-row">
-                                <div class="form-group col-md-4">
-                                    <label for="precio_boleta">Precio</label>
-                                    <input type="number" class="form-control" id="precio_boleta" name="precio_boleta"
-                                        value="<%= boleta.precio_boleta || '' %>" required>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                                <div>
+                                    <label for="precio_boleta" class="block text-sm font-medium text-gray-300 mb-2">
+                                        Precio
+                                    </label>
+                                    <input type="number" id="precio_boleta" name="precio_boleta"
+                                        value="<%= boleta.precio_boleta || '' %>" required
+                                        class="w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition-colors">
                                 </div>
 
-                                <div class="form-group col-md-4">
-                                    <label for="tipo_boleta">Tipo de Boleta</label>
-                                    <input type="text" class="form-control" id="tipo_boleta" name="tipo_boleta"
-                                        value="<%= boleta.tipo_boleta || '' %>" required>
+                                <div>
+                                    <label for="tipo_boleta" class="block text-sm font-medium text-gray-300 mb-2">
+                                        Tipo de Boleta
+                                    </label>
+                                    <input type="text" id="tipo_boleta" name="tipo_boleta"
+                                        value="<%= boleta.tipo_boleta || '' %>" required
+                                        class="w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition-colors">
                                 </div>
 
-                                <div class="form-group col-md-4">
-                                    <label for="localidad_boleta">Localidad</label>
-                                    <input type="text" class="form-control" id="localidad_boleta"
-                                        name="localidad_boleta" value="<%= boleta.localidad_boleta || '' %>" required>
-                                </div>
-                            </div>
-
-                            <div class="form-row">
-                                <div class="form-group col-md-4">
-                                    <label for="num_personas">Número de Personas</label>
-                                    <input type="number" class="form-control" id="num_personas" name="num_personas"
-                                        value="<%= boleta.num_personas || '' %>" required>
-                                </div>
-
-                                <div class="form-group col-md-4">
-                                    <label for="id_evento_PK">ID del Evento</label>
-                                    <input type="number" class="form-control" id="id_evento_PK" name="id_evento_PK"
-                                        value="<%= boleta.id_evento_PK || '' %>" required>
+                                <div>
+                                    <label for="localidad_boleta" class="block text-sm font-medium text-gray-300 mb-2">
+                                        Localidad
+                                    </label>
+                                    <input type="text" id="localidad_boleta" name="localidad_boleta"
+                                        value="<%= boleta.localidad_boleta || '' %>" required
+                                        class="w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition-colors">
                                 </div>
                             </div>
 
-                            <div class="form-group d-flex justify-content-between mt-3">
-                                <a href="/admin/boletas" class="btn btn-secondary">
-                                    <i class="fas fa-arrow-left"></i> Cancelar
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                                <div>
+                                    <label for="num_personas" class="block text-sm font-medium text-gray-300 mb-2">
+                                        Número de Personas
+                                    </label>
+                                    <input type="number" id="num_personas" name="num_personas"
+                                        value="<%= boleta.num_personas || '' %>" required
+                                        class="w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition-colors">
+                                </div>
+
+                                <div>
+                                    <label for="id_evento_PK" class="block text-sm font-medium text-gray-300 mb-2">
+                                        ID del Evento
+                                    </label>
+                                    <input type="number" id="id_evento_PK" name="id_evento_PK"
+                                        value="<%= boleta.id_evento_PK || '' %>" required
+                                        class="w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition-colors">
+                                </div>
+                            </div>
+
+                            <!-- Botones de acción -->
+                            <div
+                                class="flex flex-col sm:flex-row justify-between items-center gap-4 pt-4 border-t border-gray-700">
+                                <a href="/admin/boletas"
+                                    class="w-full sm:w-auto inline-flex items-center justify-center px-4 py-2 border border-gray-600 text-sm font-medium rounded-md text-gray-200 bg-gray-700 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors">
+                                    <i class="fas fa-arrow-left mr-2"></i>
+                                    Cancelar
                                 </a>
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fas fa-save"></i>
+                                <button type="submit"
+                                    class="w-full sm:w-auto inline-flex items-center justify-center px-6 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-gray-600 hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors">
+                                    <i class="fas fa-save mr-2"></i>
                                     <%= isEditing ? 'Actualizar' : 'Guardar' %>
                                 </button>
                             </div>
@@ -74,5 +101,6 @@
         </div>
     </div>
 
-    <br>
+    <div class="mb-8"></div>
+
     <%- include('../../partials/footer') %>

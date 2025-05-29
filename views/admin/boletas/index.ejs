@@ -1,83 +1,114 @@
 <%- include('../../partials/header', { title, user: user }) %>
 
-    <div class="container mt-4">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h1 class="mb-0"><i class="fas fa-ticket-alt"></i> Listado de boletas</h1>
-            <a href="/admin/boletas/create" class="btn btn-primary">
-                <i class="fas fa-plus"></i> Nueva boleta
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 text-gray-200">
+        <!-- Header con título y botón -->
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+            <h1
+                class="text-3xl font-extrabold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent flex items-center">
+                <i class="fas fa-ticket-alt mr-3 text-purple-400"></i>
+                Listado de Boletas
+            </h1>
+            <a href="/admin/boletas/create"
+                class="inline-flex items-center justify-center px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-medium rounded-xl shadow-lg hover:from-purple-600 hover:to-pink-600 transition-all duration-300">
+                <i class="fas fa-plus mr-2"></i>
+                Nueva Boleta
             </a>
         </div>
 
-        <div class="card shadow-sm">
-            <div class="card-body">
-                <% if (boletas && boletas.length> 0) { %>
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead class="thead-light">
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Precio</th>
-                                    <th>Tipo</th>
-                                    <th>Localidad</th>
-                                    <th>N.º Personas</th>
-                                    <th>ID Evento</th>
-                                    <th>Acciones</th>
+        <!-- Card principal -->
+        <div
+            class="bg-gray-800 bg-opacity-60 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-gray-700 hover:border-purple-500 transition-all duration-300">
+            <% if (boletas && boletas.length> 0) { %>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-700">
+                        <thead class="bg-gray-700 bg-opacity-50">
+                            <tr>
+                                <th scope="col"
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                                    ID
+                                </th>
+                                <th scope="col"
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                                    Precio
+                                </th>
+                                <th scope="col"
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                                    Tipo
+                                </th>
+                                <th scope="col"
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                                    Localidad
+                                </th>
+                                <th scope="col"
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                                    N.º Personas
+                                </th>
+                                <th scope="col"
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                                    ID Evento
+                                </th>
+                                <th scope="col"
+                                    class="px-6 py-3 text-center text-xs font-medium text-gray-300 uppercase tracking-wider">
+                                    Acciones
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-gray-800 divide-y divide-gray-700">
+                            <% boletas.forEach(boleta=> { %>
+                                <tr class="hover:bg-gray-700 transition-colors">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-200">
+                                        <%= boleta.id_boleta %>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                                        $<%= boleta.precio_boleta %>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                                        <%= boleta.tipo_boleta %>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                                        <%= boleta.localidad_boleta %>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                                        <%= boleta.num_personas %>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                                        <%= boleta.id_evento_PK %>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-center">
+                                        <div class="flex items-center justify-center space-x-2">
+                                            <a href="/admin/boletas/<%= boleta.id_boleta %>"
+                                                class="flex items-center justify-center w-8 h-8 text-xs font-medium text-white bg-indigo-500 hover:bg-indigo-600 rounded-md shadow hover:shadow-lg transition-all duration-300"
+                                                title="Ver detalle">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                            <a href="/admin/boletas/<%= boleta.id_boleta %>/edit"
+                                                class="flex items-center justify-center w-8 h-8 text-xs font-medium text-white bg-amber-500 hover:bg-amber-600 rounded-md shadow hover:shadow-lg transition-all duration-300"
+                                                title="Editar">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <form action="/admin/boletas/<%= boleta.id_boleta %>?_method=DELETE"
+                                                method="POST" class="inline">
+                                                <button type="submit"
+                                                    class="flex items-center justify-center w-8 h-8 text-xs font-medium text-white bg-red-500 hover:bg-red-600 rounded-md shadow hover:shadow-lg transition-all duration-300"
+                                                    title="Eliminar" onclick="confirmarEliminacion(event, 'boleta')">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                <% boletas.forEach(boleta=> { %>
-                                    <tr>
-                                        <td>
-                                            <%= boleta.id_boleta %>
-                                        </td>
-                                        <td>$<%= boleta.precio_boleta %>
-                                        </td>
-                                        <td>
-                                            <%= boleta.tipo_boleta %>
-                                        </td>
-                                        <td>
-                                            <%= boleta.localidad_boleta %>
-                                        </td>
-                                        <td>
-                                            <%= boleta.num_personas %>
-                                        </td>
-                                        <td>
-                                            <%= boleta.id_evento_PK %>
-                                        </td>
-                                        <td>
-                                            <div class="btn-group btn-group-sm">
-                                                <a href="/admin/boletas/<%= boleta.id_boleta %>" class="btn btn-info"
-                                                    data-toggle="tooltip" title="Ver detalle">
-                                                    <i class="fas fa-eye"></i>
-                                                </a>
-                                                <a href="/admin/boletas/<%= boleta.id_boleta %>/edit"
-                                                    class="btn btn-warning" data-toggle="tooltip" title="Editar">
-                                                    <i class="fas fa-edit"></i>
-                                                </a>
-                                                <form action="/admin/boletas/<%= boleta.id_boleta %>?_method=DELETE"
-                                                    method="POST" class="d-inline">
-                                                    <button type="submit" class="btn btn-danger" data-toggle="tooltip"
-                                                        title="Eliminar"
-                                                        onclick="confirmarEliminacion(event, 'boleta')">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <% }); %>
-                            </tbody>
-                        </table>
-                    </div>
-                    <% } else { %>
-                        <div class="alert alert-info">
-                            <i class="fas fa-info-circle"></i> No hay boletas registradas.
-                            <a href="/admin/boletas/create" class="alert-link">Registre una nueva boleta</a>.
-                        </div>
-                        <% } %>
-            </div>
+                                <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+                <% } else { %>
+                    <p class="text-gray-300">
+                        No hay boletas registradas.
+                        <a href="/admin/boletas/create" class="text-purple-400 underline ml-1">Registre una nueva
+                            boleta</a>.
+                    </p>
+                    <% } %>
         </div>
     </div>
 
-    <br>
     <%- include('../../partials/footer') %>

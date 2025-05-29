@@ -1,78 +1,171 @@
-<%- include('../partials/header', { title }) %>
+<%- include('../../partials/header', { title: 'Detalle del Evento' , user: user }) %>
 
     <div class="container mx-auto mt-8 px-4 max-w-4xl">
-        <nav class="mb-6 text-gray-300 text-sm" aria-label="breadcrumb">
-            <ol class="flex flex-wrap gap-2">
-                <li><a href="/admin" class="hover:underline text-blue-500">Inicio</a></li>
-                <li>/</li>
-                <li><a href="/admin/eventos" class="hover:underline text-blue-500">Eventos</a></li>
-                <li>/</li>
-                <li class="text-gray-400" aria-current="page">Detalle del Evento</li>
-            </ol>
-        </nav>
+        <div class="bg-gray-800 text-gray-100 rounded-lg shadow-md overflow-hidden">
 
-        <div class="bg-gray-800 rounded shadow-md overflow-hidden">
-            <div class="bg-blue-700 px-6 py-4">
-                <h5 class="text-white text-lg font-semibold flex items-center gap-2">
-                    <i class="fas fa-calendar-alt"></i> Información del Evento
-                </h5>
+            <!-- Header -->
+            <div class="bg-gray-900 text-white px-6 py-4">
+                <h4 class="text-xl font-semibold mb-0 flex items-center">
+                    <i class="fas fa-calendar-alt mr-3"></i>
+                    Detalle del Evento
+                </h4>
             </div>
-            <div class="p-6 text-gray-200 space-y-3">
-                <h2 class="text-3xl font-bold text-white">
-                    <%= evento.nombre_evento %>
-                </h2>
 
-                <p><strong class="font-semibold">Categoría:</strong>
-                    <%= evento.categoria_evento %>
-                </p>
-                <p><strong class="font-semibold">Género:</strong>
-                    <%= evento.genero_evento %>
-                </p>
-                <p><strong class="font-semibold">Lugar:</strong>
-                    <%= evento.lugar_evento %>
-                </p>
-                <p><strong class="font-semibold">Ciudad:</strong>
-                    <%= evento.ciudad_evento %>
-                </p>
-                <p><strong class="font-semibold">Departamento:</strong>
-                    <%= evento.departamento_evento %>
-                </p>
-                <p><strong class="font-semibold">Aforo:</strong>
-                    <%= evento.aforo_evento %>
-                </p>
-                <p><strong class="font-semibold">Fecha de inicio:</strong>
-                    <%= new Date(evento.fecha_inicio_evento).toLocaleDateString() %>
-                </p>
-                <p><strong class="font-semibold">Fecha de fin:</strong>
-                    <%= new Date(evento.fecha_fin_evento).toLocaleDateString() %>
-                </p>
-                <p><strong class="font-semibold">Hora de apertura:</strong>
-                    <%= evento.hora_apertura %>
-                </p>
-                <p><strong class="font-semibold">Edad mínima:</strong>
-                    <%= evento.edad_minima %> años
-                </p>
-                <p><strong class="font-semibold">ID del artista:</strong>
-                    <%= evento.id_artista_PK %>
-                </p>
-                <p><strong class="font-semibold">ID del organizador:</strong>
-                    <%= evento.id_organizador_PK %>
-                </p>
+            <!-- Contenido -->
+            <div class="p-6">
 
-                <div class="mt-6 flex flex-wrap gap-4">
-                    <a href="/eventos/<%= evento.id_evento %>/edit"
-                        class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-semibold px-4 py-2 rounded flex items-center gap-2 shadow transition">
-                        <i class="fas fa-edit"></i> Editar
-                    </a>
-                    <form action="/eventos/<%= evento.id_evento %>?_method=DELETE" method="POST" class="inline">
-                        <button type="submit" onclick="confirmarEliminacion(event, 'evento')"
-                            class="bg-red-600 hover:bg-red-700 text-white font-semibold px-4 py-2 rounded flex items-center gap-2 shadow transition">
-                            <i class="fas fa-trash"></i> Eliminar
-                        </button>
-                    </form>
+                <!-- Información del evento -->
+                <div class="bg-gray-700 rounded-md p-6 mb-6 border border-gray-600">
+                    <dl class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                        <div>
+                            <dt class="text-sm font-medium text-gray-300 mb-1">ID del Evento</dt>
+                            <dd class="text-lg font-semibold text-gray-100">
+                                <%= evento.id_evento %>
+                            </dd>
+                        </div>
+
+                        <div class="md:col-span-2">
+                            <dt class="text-sm font-medium text-gray-300 mb-1">Nombre del Evento</dt>
+                            <dd class="text-lg font-semibold text-gray-100">
+                                <%= evento.nombre_evento %>
+                            </dd>
+                        </div>
+
+                        <div>
+                            <dt class="text-sm font-medium text-gray-300 mb-1">Categoría</dt>
+                            <dd class="text-lg font-semibold text-gray-100">
+                                <%= evento.categoria_evento %>
+                            </dd>
+                        </div>
+
+                        <div>
+                            <dt class="text-sm font-medium text-gray-300 mb-1">Género</dt>
+                            <dd class="text-lg font-semibold text-gray-100">
+                                <%= evento.genero_evento %>
+                            </dd>
+                        </div>
+
+                        <div>
+                            <dt class="text-sm font-medium text-gray-300 mb-1">Lugar</dt>
+                            <dd class="text-lg font-semibold text-gray-100">
+                                <%= evento.lugar_evento %>
+                            </dd>
+                        </div>
+
+                        <div>
+                            <dt class="text-sm font-medium text-gray-300 mb-1">Ciudad</dt>
+                            <dd class="text-lg font-semibold text-gray-100">
+                                <%= evento.ciudad_evento %>
+                            </dd>
+                        </div>
+
+                        <div>
+                            <dt class="text-sm font-medium text-gray-300 mb-1">Departamento</dt>
+                            <dd class="text-lg font-semibold text-gray-100">
+                                <%= evento.departamento_evento %>
+                            </dd>
+                        </div>
+
+                        <div>
+                            <dt class="text-sm font-medium text-gray-300 mb-1">Aforo</dt>
+                            <dd class="text-lg font-semibold text-gray-100">
+                                <%= evento.aforo_evento %>
+                            </dd>
+                        </div>
+
+                        <div>
+                            <dt class="text-sm font-medium text-gray-300 mb-1">Fecha de inicio</dt>
+                            <dd class="text-lg font-semibold text-gray-100">
+                                <%= new Date(evento.fecha_inicio_evento).toLocaleDateString() %>
+                            </dd>
+                        </div>
+
+                        <div>
+                            <dt class="text-sm font-medium text-gray-300 mb-1">Fecha de fin</dt>
+                            <dd class="text-lg font-semibold text-gray-100">
+                                <%= new Date(evento.fecha_fin_evento).toLocaleDateString() %>
+                            </dd>
+                        </div>
+
+                        <div>
+                            <dt class="text-sm font-medium text-gray-300 mb-1">Hora de apertura</dt>
+                            <dd class="text-lg font-semibold text-gray-100">
+                                <%= evento.hora_apertura %>
+                            </dd>
+                        </div>
+
+                        <div>
+                            <dt class="text-sm font-medium text-gray-300 mb-1">Edad mínima</dt>
+                            <dd class="text-lg font-semibold text-gray-100">
+                                <%= evento.edad_minima %> años
+                            </dd>
+                        </div>
+
+                        <div>
+                            <dt class="text-sm font-medium text-gray-300 mb-1">ID del Artista</dt>
+                            <dd class="text-lg font-semibold text-gray-100">
+                                <%= evento.id_artista_PK %>
+                            </dd>
+                        </div>
+
+                    </dl>
                 </div>
+
+                <!-- Información adicional -->
+                <div class="border-t border-gray-600 pt-6">
+                    <h5 class="text-lg font-medium text-gray-100 mb-4 flex items-center">
+                        <i class="fas fa-info-circle mr-2 text-gray-400"></i>
+                        Información del Registro
+                    </h5>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-gray-300">
+                        <div class="flex items-center">
+                            <i class="fas fa-calendar-alt mr-2 text-gray-400"></i>
+                            <span>Registrado en el sistema</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-id-badge mr-2 text-gray-400"></i>
+                            <span>ID Evento: <%= evento.id_evento %></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botones de acción -->
+                <div
+                    class="flex flex-col sm:flex-row justify-between items-center gap-4 pt-6 border-t border-gray-600 mt-6">
+
+                    <!-- Botón Volver -->
+                    <a href="/admin/eventos"
+                        class="w-full sm:w-auto inline-flex items-center justify-center px-4 py-2 border border-gray-600 text-sm font-medium rounded-md text-gray-200 bg-gray-700 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors">
+                        <i class="fas fa-arrow-left mr-2"></i>
+                        Volver
+                    </a>
+
+                    <!-- Grupo de botones de acción -->
+                    <div class="flex flex-col sm:flex-row w-full sm:w-auto gap-2">
+                        <a href="/admin/eventos/<%= evento.id_evento %>/edit"
+                            class="w-full sm:w-auto inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-gray-600 hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors">
+                            <i class="fas fa-edit mr-2"></i>
+                            Editar
+                        </a>
+
+                        <form action="/admin/eventos/<%= evento.id_evento %>?_method=DELETE" method="POST"
+                            class="w-full sm:w-auto">
+                            <button type="submit"
+                                class="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors"
+                                onclick="confirmarEliminacion(event, 'evento')">
+                                <i class="fas fa-trash mr-2"></i>
+                                Eliminar
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+
             </div>
         </div>
     </div>
 
-    <%- include('../partials/footer') %>
+    <div class="mb-8"></div>
+
+    <%- include('../../partials/footer') %>

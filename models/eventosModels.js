@@ -14,12 +14,12 @@ class Evento {
   static async create(evento) {
     const { nombre_evento, categoria_evento, lugar_evento, ciudad_evento, departamento_evento, 
       aforo_evento, fecha_inicio_evento, fecha_fin_evento, hora_apertura, genero_evento, 
-      edad_minima, id_artista_PK, id_organizador_PK 
+      edad_minima, id_artista_PK 
     } = evento;
 
     const [result] = await pool.query(
-      'INSERT INTO eventos (nombre_evento, categoria_evento, lugar_evento, ciudad_evento, departamento_evento, aforo_evento, fecha_inicio_evento, fecha_fin_evento, hora_apertura, genero_evento, edad_minima, id_artista_PK, id_organizador_PK) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-      [nombre_evento, categoria_evento, lugar_evento, ciudad_evento, departamento_evento, aforo_evento, fecha_inicio_evento, fecha_fin_evento, hora_apertura, genero_evento, edad_minima, id_artista_PK, id_organizador_PK]
+      'INSERT INTO eventos (nombre_evento, categoria_evento, lugar_evento, ciudad_evento, departamento_evento, aforo_evento, fecha_inicio_evento, fecha_fin_evento, hora_apertura, genero_evento, edad_minima, id_artista_PK) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      [nombre_evento, categoria_evento, lugar_evento, ciudad_evento, departamento_evento, aforo_evento, fecha_inicio_evento, fecha_fin_evento, hora_apertura, genero_evento, edad_minima, id_artista_PK]
     );
     return result.insertId;
   }
@@ -27,7 +27,7 @@ class Evento {
   static async update(id_evento, evento) {
     const { nombre_evento, categoria_evento, lugar_evento, ciudad_evento, departamento_evento, 
       aforo_evento, fecha_inicio_evento, fecha_fin_evento, hora_apertura, genero_evento, 
-      edad_minima, id_artista_PK, id_organizador_PK 
+      edad_minima, id_artista_PK 
     } = evento;
 
     const [result] = await pool.query(
@@ -35,11 +35,11 @@ class Evento {
         nombre_evento = ?, categoria_evento = ?, lugar_evento = ?, ciudad_evento = ?, 
         departamento_evento = ?, aforo_evento = ?, fecha_inicio_evento = ?, 
         fecha_fin_evento = ?, hora_apertura = ?, genero_evento = ?, edad_minima = ?, 
-        id_artista_PK = ?, id_organizador_PK = ? 
+        id_artista_PK = ?
         WHERE id_evento = ?`,
       [nombre_evento, categoria_evento, lugar_evento, ciudad_evento, departamento_evento, aforo_evento, 
        fecha_inicio_evento, fecha_fin_evento, hora_apertura, genero_evento, edad_minima, 
-       id_artista_PK, id_organizador_PK, id_evento]
+       id_artista_PK, id_evento]
     );
     return result.affectedRows > 0;
   }

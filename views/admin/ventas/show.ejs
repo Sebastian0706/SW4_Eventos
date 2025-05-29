@@ -1,51 +1,99 @@
-<%- include('../partials/header', { title }) %>
+<%- include('../../partials/header', { title: 'Detalle de la Venta' , user: user }) %>
 
-    <div class="container mt-4">
-        <div class="card shadow-sm">
-            <div class="card-header bg-info text-white">
-                <h4 class="mb-0">
-                    <i class="fas fa-receipt"></i> Detalles de la Venta
+    <div class="container mx-auto mt-8 px-4">
+        <div class="bg-gray-800 text-gray-100 rounded-lg shadow-md overflow-hidden">
+            <!-- Header -->
+            <div class="bg-gray-900 text-white px-6 py-4">
+                <h4 class="text-xl font-semibold mb-0 flex items-center">
+                    <i class="fas fa-receipt mr-3"></i>
+                    Detalle de la Venta
                 </h4>
             </div>
-            <div class="card-body">
 
-                <dl class="row">
-                    <dt class="col-sm-4">ID de Venta</dt>
-                    <dd class="col-sm-8">
-                        <%= venta.id_venta %>
-                    </dd>
+            <!-- Contenido -->
+            <div class="p-6">
+                <!-- Información de la venta -->
+                <div class="bg-gray-700 rounded-md p-6 mb-6 border border-gray-600">
+                    <dl class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div>
+                            <dt class="text-sm font-medium text-gray-300 mb-1">ID de Venta</dt>
+                            <dd class="text-lg font-semibold text-gray-100">
+                                <%= venta.id_venta %>
+                            </dd>
+                        </div>
 
-                    <dt class="col-sm-4">Valor Total</dt>
-                    <dd class="col-sm-8">$<%= venta.valor_total.toLocaleString() %>
-                    </dd>
+                        <div>
+                            <dt class="text-sm font-medium text-gray-300 mb-1">Valor Total</dt>
+                            <dd class="text-lg font-semibold text-green-400">$<%= venta.valor_total.toLocaleString() %>
+                            </dd>
+                        </div>
 
-                    <dt class="col-sm-4">Fecha de Venta</dt>
-                    <dd class="col-sm-8">
-                        <%= new Date(venta.fecha_venta).toLocaleDateString() %>
-                    </dd>
+                        <div>
+                            <dt class="text-sm font-medium text-gray-300 mb-1">Fecha de Venta</dt>
+                            <dd class="text-lg font-semibold text-gray-100">
+                                <%= new Date(venta.fecha_venta).toLocaleDateString() %>
+                            </dd>
+                        </div>
 
-                    <dt class="col-sm-4">Método de Pago</dt>
-                    <dd class="col-sm-8">
-                        <%= venta.metodo_pago %>
-                    </dd>
+                        <div>
+                            <dt class="text-sm font-medium text-gray-300 mb-1">Método de Pago</dt>
+                            <dd class="text-lg font-semibold text-gray-100">
+                                <%= venta.metodo_pago %>
+                            </dd>
+                        </div>
 
-                    <dt class="col-sm-4">ID de Compra Asociada</dt>
-                    <dd class="col-sm-8">
-                        <%= venta.id_compra_PK %>
-                    </dd>
-                </dl>
+                        <div class="md:col-span-2">
+                            <dt class="text-sm font-medium text-gray-300 mb-1">ID de Compra Asociada</dt>
+                            <dd class="text-lg font-semibold text-gray-100">
+                                <%= venta.id_compra_PK %>
+                            </dd>
+                        </div>
+                    </dl>
+                </div>
 
-                <div class="d-flex justify-content-between mt-4">
-                    <a href="/ventas" class="btn btn-secondary">
-                        <i class="fas fa-arrow-left"></i> Volver al listado
+                <!-- Información adicional -->
+                <div class="border-t border-gray-600 pt-6">
+                    <h5 class="text-lg font-medium text-gray-100 mb-4 flex items-center">
+                        <i class="fas fa-info-circle mr-2 text-gray-400"></i>
+                        Información adicional
+                    </h5>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-gray-300">
+                        <div class="flex items-center">
+                            <i class="fas fa-calendar-alt mr-2 text-gray-400"></i>
+                            <span>Registro creado en el sistema</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-receipt mr-2 text-gray-400"></i>
+                            <span>ID: <%= venta.id_venta %></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botones de acción -->
+                <div
+                    class="flex flex-col sm:flex-row justify-between items-center gap-4 pt-6 border-t border-gray-600 mt-6">
+                    <!-- Botón Volver -->
+                    <a href="/admin/ventas"
+                        class="w-full sm:w-auto inline-flex items-center justify-center px-4 py-2 border border-gray-600 text-sm font-medium rounded-md text-gray-200 bg-gray-700 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors">
+                        <i class="fas fa-arrow-left mr-2"></i>
+                        Volver
                     </a>
-                    <div class="btn-group">
-                        <a href="/ventas/<%= venta.id_venta %>/edit" class="btn btn-warning">
-                            <i class="fas fa-edit"></i> Editar
+
+                    <!-- Grupo de botones de acción -->
+                    <div class="flex flex-col sm:flex-row w-full sm:w-auto gap-2">
+                        <a href="/admin/ventas/<%= venta.id_venta %>/edit"
+                            class="w-full sm:w-auto inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-gray-600 hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors">
+                            <i class="fas fa-edit mr-2"></i>
+                            Editar
                         </a>
-                        <form action="/ventas/<%= venta.id_venta %>?_method=DELETE" method="POST" class="d-inline">
-                            <button type="submit" class="btn btn-danger" onclick="confirmarEliminacion(event, 'venta')">
-                                <i class="fas fa-trash"></i> Eliminar
+
+                        <form action="/admin/ventas/<%= venta.id_venta %>?_method=DELETE" method="POST"
+                            class="w-full sm:w-auto">
+                            <button type="submit"
+                                class="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors"
+                                onclick="confirmarEliminacion(event, 'venta')">
+                                <i class="fas fa-trash mr-2"></i>
+                                Eliminar
                             </button>
                         </form>
                     </div>
@@ -54,5 +102,6 @@
         </div>
     </div>
 
-    <br>
-    <%- include('../partials/footer') %>
+    <div class="mb-8"></div>
+
+    <%- include('../../partials/footer') %>

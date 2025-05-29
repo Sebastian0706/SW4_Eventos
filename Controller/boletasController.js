@@ -42,8 +42,11 @@ exports.store = async (req, res) => {
   }
 
   try {
-    await Boleta.create(req.body);
-    res.redirect('/admin/boletas');
+    // Asumiendo que create retorna el objeto boleta con id_boleta
+    const nuevaBoleta = await Boleta.create(req.body);
+
+    // Redirigir a la vista detalle de la boleta recién creada
+    res.redirect(`/admin/boletas/${nuevaBoleta.id_boleta}`);
   } catch (error) {
     console.error('Error al guardar boleta:', error);
     res.render('admin/boletas/form', {
@@ -106,7 +109,8 @@ exports.update = async (req, res) => {
       });
     }
 
-    res.redirect('/admin/boletas');
+    // Redirigir a la vista detalle de la boleta actualizada
+    res.redirect(`/admin/boletas/${id_boleta}`);
   } catch (error) {
     console.error('Error al actualizar boleta:', error);
     res.render('admin/boletas/form', {
@@ -114,6 +118,31 @@ exports.update = async (req, res) => {
       boleta: { ...req.body, id_boleta },
       errors: [{ msg: 'Error al actualizar la boleta.' }],
       isEditing: true,
+    });
+  }
+};
+// Mostrar el detalle de una boleta existente
+exports.show = async (req, res) => {
+  try {
+    const id_boleta = req.params.id_boleta;
+    const boleta = await Boleta.getById(id_boleta);
+
+    if (!boleta) {
+      return res.status(404).render('error', {
+        title: 'Boleta no encontrada',
+        message: 'La boleta que buscas no existe.',
+      });
+    }
+
+    res.render('admin/boletas/show', {
+      title: `Detalle Boleta #${boleta.id_boleta}`,
+      boleta,
+    });
+  } catch (error) {
+    console.error('Error al cargar el detalle de la boleta:', error);
+    res.status(500).render('error', {
+      title: 'Error',
+      message: 'No se pudo cargar el detalle de la boleta.',
     });
   }
 };

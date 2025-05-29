@@ -9,5 +9,6 @@ router.post('/', validateVenta, ventasController.store);
 router.get('/:id_venta/edit', ventasController.edit);
 router.put('/:id_venta', validateVenta, ventasController.update);
 router.delete('/:id_venta', ventasController.delete);
+router.get('/:id_venta', ventasController.show);
 
 module.exports = router;

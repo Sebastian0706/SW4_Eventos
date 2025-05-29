@@ -2,6 +2,7 @@
 
     <div class="container mx-auto mt-8 px-4">
         <div class="bg-gray-800 text-gray-100 rounded-lg shadow-md overflow-hidden">
+
             <!-- Header del formulario -->
             <div class="bg-gray-900 text-white px-6 py-4">
                 <h4 class="text-xl font-semibold mb-0 flex items-center">
@@ -12,7 +13,6 @@
 
             <!-- Cuerpo del formulario -->
             <div class="p-6">
-                <!-- Mensajes de error -->
                 <% if (errors && errors.length> 0) { %>
                     <div class="bg-red-800/20 border border-red-800 rounded-md p-4 mb-6">
                         <div class="flex items-center mb-2">
@@ -29,163 +29,148 @@
                     </div>
                     <% } %>
 
-                        <!-- Formulario -->
-                        <form action="<%= isEditing ? `/eventos/${evento.id_evento}?_method=PUT` : '/eventos' %>"
+                        <form action="<%= isEditing ? `/admin/eventos/${evento.id_evento}` : '/admin/eventos' %>"
                             method="POST">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                                <!-- Nombre del evento -->
-                                <div>
-                                    <label for="nombre_evento" class="block text-sm font-medium text-gray-300 mb-2">
-                                        Nombre del evento
-                                    </label>
-                                    <input type="text" id="nombre_evento" name="nombre_evento" required
-                                        placeholder="Ingrese el nombre del evento"
-                                        value="<%= evento.nombre_evento || '' %>"
-                                        class="w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition-colors">
-                                </div>
+                            <% if (isEditing) { %>
+                                <input type="hidden" name="_method" value="PUT" />
+                                <% } %>
 
-                                <!-- Categoría -->
-                                <div>
-                                    <label for="categoria_evento" class="block text-sm font-medium text-gray-300 mb-2">
-                                        Categoría
-                                    </label>
-                                    <input type="text" id="categoria_evento" name="categoria_evento"
-                                        placeholder="Ingrese la categoría" value="<%= evento.categoria_evento || '' %>"
-                                        class="w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition-colors">
-                                </div>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
 
-                                <!-- Género -->
-                                <div>
-                                    <label for="genero_evento" class="block text-sm font-medium text-gray-300 mb-2">
-                                        Género
-                                    </label>
-                                    <input type="text" id="genero_evento" name="genero_evento"
-                                        placeholder="Ingrese el género" value="<%= evento.genero_evento || '' %>"
-                                        class="w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition-colors">
-                                </div>
+                                        <!-- Nombre del evento -->
+                                        <div>
+                                            <label for="nombre_evento"
+                                                class="block text-sm font-medium text-gray-300 mb-2">Nombre del
+                                                evento</label>
+                                            <input type="text" id="nombre_evento" name="nombre_evento" required
+                                                placeholder="Ingrese el nombre del evento"
+                                                value="<%= evento.nombre_evento || '' %>"
+                                                class="w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition-colors">
+                                        </div>
 
-                                <!-- Lugar -->
-                                <div>
-                                    <label for="lugar_evento" class="block text-sm font-medium text-gray-300 mb-2">
-                                        Lugar
-                                    </label>
-                                    <input type="text" id="lugar_evento" name="lugar_evento"
-                                        placeholder="Ingrese el lugar" value="<%= evento.lugar_evento || '' %>"
-                                        class="w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition-colors">
-                                </div>
+                                        <!-- Categoría -->
+                                        <div>
+                                            <label for="categoria_evento"
+                                                class="block text-sm font-medium text-gray-300 mb-2">Categoría</label>
+                                            <input type="text" id="categoria_evento" name="categoria_evento"
+                                                placeholder="Ingrese la categoría"
+                                                value="<%= evento.categoria_evento || '' %>"
+                                                class="w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition-colors">
+                                        </div>
 
-                                <!-- Ciudad -->
-                                <div>
-                                    <label for="ciudad_evento" class="block text-sm font-medium text-gray-300 mb-2">
-                                        Ciudad
-                                    </label>
-                                    <input type="text" id="ciudad_evento" name="ciudad_evento"
-                                        placeholder="Ingrese la ciudad" value="<%= evento.ciudad_evento || '' %>"
-                                        class="w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition-colors">
-                                </div>
+                                        <!-- Género -->
+                                        <div>
+                                            <label for="genero_evento"
+                                                class="block text-sm font-medium text-gray-300 mb-2">Género</label>
+                                            <input type="text" id="genero_evento" name="genero_evento"
+                                                placeholder="Ingrese el género"
+                                                value="<%= evento.genero_evento || '' %>"
+                                                class="w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition-colors">
+                                        </div>
 
-                                <!-- Departamento -->
-                                <div>
-                                    <label for="departamento_evento"
-                                        class="block text-sm font-medium text-gray-300 mb-2">
-                                        Departamento
-                                    </label>
-                                    <input type="text" id="departamento_evento" name="departamento_evento"
-                                        placeholder="Ingrese el departamento"
-                                        value="<%= evento.departamento_evento || '' %>"
-                                        class="w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition-colors">
-                                </div>
+                                        <!-- Lugar -->
+                                        <div>
+                                            <label for="lugar_evento"
+                                                class="block text-sm font-medium text-gray-300 mb-2">Lugar</label>
+                                            <input type="text" id="lugar_evento" name="lugar_evento"
+                                                placeholder="Ingrese el lugar" value="<%= evento.lugar_evento || '' %>"
+                                                class="w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition-colors">
+                                        </div>
 
-                                <!-- Aforo -->
-                                <div>
-                                    <label for="aforo_evento" class="block text-sm font-medium text-gray-300 mb-2">
-                                        Aforo
-                                    </label>
-                                    <input type="number" id="aforo_evento" name="aforo_evento" min="0"
-                                        placeholder="Ingrese el aforo" value="<%= evento.aforo_evento || '' %>"
-                                        class="w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition-colors">
-                                </div>
+                                        <!-- Ciudad -->
+                                        <div>
+                                            <label for="ciudad_evento"
+                                                class="block text-sm font-medium text-gray-300 mb-2">Ciudad</label>
+                                            <input type="text" id="ciudad_evento" name="ciudad_evento"
+                                                placeholder="Ingrese la ciudad"
+                                                value="<%= evento.ciudad_evento || '' %>"
+                                                class="w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition-colors">
+                                        </div>
 
-                                <!-- Fecha de inicio -->
-                                <div>
-                                    <label for="fecha_inicio_evento"
-                                        class="block text-sm font-medium text-gray-300 mb-2">
-                                        Fecha de inicio
-                                    </label>
-                                    <input type="date" id="fecha_inicio_evento" name="fecha_inicio_evento"
-                                        value="<%= evento.fecha_inicio_evento ? evento.fecha_inicio_evento.toISOString().split('T')[0] : '' %>"
-                                        class="w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition-colors"
-                                        required>
-                                </div>
+                                        <!-- Departamento -->
+                                        <div>
+                                            <label for="departamento_evento"
+                                                class="block text-sm font-medium text-gray-300 mb-2">Departamento</label>
+                                            <input type="text" id="departamento_evento" name="departamento_evento"
+                                                placeholder="Ingrese el departamento"
+                                                value="<%= evento.departamento_evento || '' %>"
+                                                class="w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition-colors">
+                                        </div>
 
-                                <!-- Fecha de fin -->
-                                <div>
-                                    <label for="fecha_fin_evento" class="block text-sm font-medium text-gray-300 mb-2">
-                                        Fecha de fin
-                                    </label>
-                                    <input type="date" id="fecha_fin_evento" name="fecha_fin_evento"
-                                        value="<%= evento.fecha_fin_evento ? evento.fecha_fin_evento.toISOString().split('T')[0] : '' %>"
-                                        class="w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition-colors"
-                                        required>
-                                </div>
+                                        <!-- Aforo -->
+                                        <div>
+                                            <label for="aforo_evento"
+                                                class="block text-sm font-medium text-gray-300 mb-2">Aforo</label>
+                                            <input type="number" id="aforo_evento" name="aforo_evento" min="0"
+                                                placeholder="Ingrese el aforo" value="<%= evento.aforo_evento || '' %>"
+                                                class="w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition-colors">
+                                        </div>
 
-                                <!-- Hora de apertura -->
-                                <div>
-                                    <label for="hora_apertura" class="block text-sm font-medium text-gray-300 mb-2">
-                                        Hora de apertura
-                                    </label>
-                                    <input type="time" id="hora_apertura" name="hora_apertura"
-                                        value="<%= evento.hora_apertura ? evento.hora_apertura.slice(0,5) : '' %>"
-                                        class="w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition-colors">
-                                </div>
+                                        <!-- Fecha de inicio -->
+                                        <div>
+                                            <label for="fecha_inicio_evento"
+                                                class="block text-sm font-medium text-gray-300 mb-2">Fecha de
+                                                inicio</label>
+                                            <input type="date" id="fecha_inicio_evento" name="fecha_inicio_evento"
+                                                required value="<%= evento.fecha_inicio_evento || '' %>"
+                                                class="w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition-colors">
+                                        </div>
 
-                                <!-- Edad mínima -->
-                                <div>
-                                    <label for="edad_minima" class="block text-sm font-medium text-gray-300 mb-2">
-                                        Edad mínima
-                                    </label>
-                                    <input type="number" id="edad_minima" name="edad_minima" min="0"
-                                        placeholder="Ingrese la edad mínima" value="<%= evento.edad_minima || '' %>"
-                                        class="w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition-colors">
-                                </div>
+                                        <!-- Fecha de fin -->
+                                        <div>
+                                            <label for="fecha_fin_evento"
+                                                class="block text-sm font-medium text-gray-300 mb-2">Fecha de
+                                                fin</label>
+                                            <input type="date" id="fecha_fin_evento" name="fecha_fin_evento" required
+                                                value="<%= evento.fecha_fin_evento || '' %>"
+                                                class="w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition-colors">
+                                        </div>
 
-                                <!-- ID del artista -->
-                                <div>
-                                    <label for="id_artista_PK" class="block text-sm font-medium text-gray-300 mb-2">
-                                        ID del artista
-                                    </label>
-                                    <input type="number" id="id_artista_PK" name="id_artista_PK" min="0"
-                                        placeholder="Ingrese el ID del artista"
-                                        value="<%= evento.id_artista_PK || '' %>"
-                                        class="w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition-colors">
-                                </div>
+                                        <!-- Hora de apertura -->
+                                        <div>
+                                            <label for="hora_apertura"
+                                                class="block text-sm font-medium text-gray-300 mb-2">Hora de
+                                                apertura</label>
+                                            <input type="time" id="hora_apertura" name="hora_apertura"
+                                                value="<%= evento.hora_apertura ? evento.hora_apertura.slice(0, 5) : '' %>"
+                                                class="w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition-colors">
+                                        </div>
 
-                                <!-- ID del organizador -->
-                                <div>
-                                    <label for="id_organizador_PK" class="block text-sm font-medium text-gray-300 mb-2">
-                                        ID del organizador
-                                    </label>
-                                    <input type="number" id="id_organizador_PK" name="id_organizador_PK" min="0"
-                                        placeholder="Ingrese el ID del organizador"
-                                        value="<%= evento.id_organizador_PK || '' %>"
-                                        class="w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition-colors">
-                                </div>
-                            </div>
+                                        <!-- Edad mínima -->
+                                        <div>
+                                            <label for="edad_minima"
+                                                class="block text-sm font-medium text-gray-300 mb-2">Edad mínima</label>
+                                            <input type="number" id="edad_minima" name="edad_minima" min="0"
+                                                placeholder="Ingrese la edad mínima"
+                                                value="<%= evento.edad_minima || '' %>"
+                                                class="w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition-colors">
+                                        </div>
 
-                            <!-- Botones de acción -->
-                            <div
-                                class="flex flex-col sm:flex-row justify-between items-center gap-4 pt-4 border-t border-gray-700">
-                                <a href="/admin/eventos"
-                                    class="w-full sm:w-auto inline-flex items-center justify-center px-4 py-2 border border-gray-600 text-sm font-medium rounded-md text-gray-200 bg-gray-700 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors">
-                                    <i class="fas fa-arrow-left mr-2"></i>
-                                    Cancelar
-                                </a>
-                                <button type="submit"
-                                    class="w-full sm:w-auto inline-flex items-center justify-center px-6 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-gray-600 hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors">
-                                    <i class="fas fa-save mr-2"></i>
-                                    <%= isEditing ? 'Actualizar' : 'Guardar' %>
-                                </button>
-                            </div>
+                                        <!-- ID del artista -->
+                                        <div>
+                                            <label for="id_artista_PK"
+                                                class="block text-sm font-medium text-gray-300 mb-2">ID del
+                                                artista</label>
+                                            <input type="number" id="id_artista_PK" name="id_artista_PK" min="0"
+                                                placeholder="Ingrese el ID del artista"
+                                                value="<%= evento.id_artista_PK || '' %>"
+                                                class="w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition-colors">
+                                        </div>
+                                    </div>
+
+                                    <!-- Botones de acción -->
+                                    <div
+                                        class="flex flex-col sm:flex-row justify-between items-center gap-4 pt-4 border-t border-gray-700">
+                                        <a href="/admin/eventos"
+                                            class="w-full sm:w-auto inline-flex items-center justify-center px-4 py-2 border border-gray-600 text-sm font-medium rounded-md text-gray-200 bg-gray-700 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors">
+                                            <i class="fas fa-arrow-left mr-2"></i> Cancelar
+                                        </a>
+                                        <button type="submit"
+                                            class="w-full sm:w-auto inline-flex items-center justify-center px-6 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-gray-600 hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors">
+                                            <i class="fas fa-save mr-2"></i>
+                                            <%= isEditing ? 'Actualizar' : 'Guardar' %>
+                                        </button>
+                                    </div>
                         </form>
             </div>
         </div>

@@ -1,75 +1,145 @@
 <%- include('../../partials/header', { title: 'Detalle del Usuario' }) %>
 
-<div class="container mt-4">
-  <div class="card shadow-sm">
-    <div class="card-header bg-info text-white">
-      <h4 class="mb-0">
-        <i class="fas fa-user"></i> Detalle del Usuario
-      </h4>
-    </div>
-    <div class="card-body">
-      <dl class="row">
+  <div class="container mx-auto mt-8 px-4">
+    <div class="bg-gray-800 text-gray-100 rounded-lg shadow-md overflow-hidden">
+      <!-- Header -->
+      <div class="bg-gray-900 text-white px-6 py-4">
+        <h4 class="text-xl font-semibold mb-0 flex items-center">
+          <i class="fas fa-user mr-3"></i>
+          Detalle del Usuario
+        </h4>
+      </div>
 
-        <dt class="col-sm-3">ID</dt>
-        <dd class="col-sm-9"><%= usuario.id_usuario %></dd>
+      <!-- Contenido -->
+      <div class="p-6">
+        <!-- Información del usuario -->
+        <div class="bg-gray-700 rounded-md p-6 mb-6 border border-gray-600">
+          <dl class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div>
+              <dt class="text-sm font-medium text-gray-300 mb-1">ID</dt>
+              <dd class="text-lg font-semibold text-gray-100">
+                <%= usuario.id_usuario %>
+              </dd>
+            </div>
 
-        <dt class="col-sm-3">Primer Nombre</dt>
-        <dd class="col-sm-9"><%= usuario.primer_nombre %></dd>
+            <div>
+              <dt class="text-sm font-medium text-gray-300 mb-1">Primer Nombre</dt>
+              <dd class="text-lg font-semibold text-gray-100">
+                <%= usuario.primer_nombre %>
+              </dd>
+            </div>
 
-        <dt class="col-sm-3">Segundo Nombre</dt>
-        <dd class="col-sm-9"><%= usuario.segundo_nombre || '-' %></dd>
+            <div>
+              <dt class="text-sm font-medium text-gray-300 mb-1">Segundo Nombre</dt>
+              <dd class="text-lg font-semibold text-gray-100">
+                <%= usuario.segundo_nombre || '-' %>
+              </dd>
+            </div>
 
-        <dt class="col-sm-3">Primer Apellido</dt>
-        <dd class="col-sm-9"><%= usuario.primer_apellido %></dd>
+            <div>
+              <dt class="text-sm font-medium text-gray-300 mb-1">Primer Apellido</dt>
+              <dd class="text-lg font-semibold text-gray-100">
+                <%= usuario.primer_apellido %>
+              </dd>
+            </div>
 
-        <dt class="col-sm-3">Segundo Apellido</dt>
-        <dd class="col-sm-9"><%= usuario.segundo_apellido || '-' %></dd>
+            <div>
+              <dt class="text-sm font-medium text-gray-300 mb-1">Segundo Apellido</dt>
+              <dd class="text-lg font-semibold text-gray-100">
+                <%= usuario.segundo_apellido || '-' %>
+              </dd>
+            </div>
 
-        <dt class="col-sm-3">Tipo Documento</dt>
-        <dd class="col-sm-9"><%= usuario.tipo_documento %></dd>
+            <div>
+              <dt class="text-sm font-medium text-gray-300 mb-1">Tipo Documento</dt>
+              <dd class="text-lg font-semibold text-gray-100">
+                <%= usuario.tipo_documento %>
+              </dd>
+            </div>
 
-        <dt class="col-sm-3">Número Documento</dt>
-        <dd class="col-sm-9"><%= usuario.numero_documento %></dd>
+            <div>
+              <dt class="text-sm font-medium text-gray-300 mb-1">Número Documento</dt>
+              <dd class="text-lg font-semibold text-gray-100">
+                <%= usuario.numero_documento %>
+              </dd>
+            </div>
 
-        <dt class="col-sm-3">Fecha de Nacimiento</dt>
-        <dd class="col-sm-9"><%= usuario.fecha_nacimiento.toISOString().split('T')[0] %></dd>
+            <div>
+              <dt class="text-sm font-medium text-gray-300 mb-1">Fecha de Nacimiento</dt>
+              <dd class="text-lg font-semibold text-gray-100">
+                <%= usuario.fecha_nacimiento.toISOString().split('T')[0] %>
+              </dd>
+            </div>
 
-        <dt class="col-sm-3">Celular</dt>
-        <dd class="col-sm-9"><%= usuario.celular_usuario %></dd>
+            <div>
+              <dt class="text-sm font-medium text-gray-300 mb-1">Celular</dt>
+              <dd class="text-lg font-semibold text-gray-100">
+                <%= usuario.celular_usuario %>
+              </dd>
+            </div>
 
-        <dt class="col-sm-3">Dirección</dt>
-        <dd class="col-sm-9"><%= usuario.direccion_usuario %></dd>
+            <div>
+              <dt class="text-sm font-medium text-gray-300 mb-1">Dirección</dt>
+              <dd class="text-lg font-semibold text-gray-100">
+                <%= usuario.direccion_usuario %>
+              </dd>
+            </div>
 
-        <dt class="col-sm-3">Nombre de Usuario</dt>
-        <dd class="col-sm-9"><%= usuario.nombre_usuario %></dd>
+            <div>
+              <dt class="text-sm font-medium text-gray-300 mb-1">Nombre de Usuario</dt>
+              <dd class="text-lg font-semibold text-gray-100">
+                <%= usuario.nombre_usuario %>
+              </dd>
+            </div>
 
-        <dt class="col-sm-3">Correo</dt>
-        <dd class="col-sm-9"><%= usuario.correo %></dd>
+            <div>
+              <dt class="text-sm font-medium text-gray-300 mb-1">Correo</dt>
+              <dd class="text-lg font-semibold text-gray-100">
+                <%= usuario.correo %>
+              </dd>
+            </div>
 
-        <dt class="col-sm-3">Rol</dt>
-        <dd class="col-sm-9"><%= usuario.nombre_rol || '-' %></dd>
+            <div>
+              <dt class="text-sm font-medium text-gray-300 mb-1">Rol</dt>
+              <dd class="text-lg font-semibold text-gray-100">
+                <%= usuario.nombre_rol || '-' %>
+              </dd>
+            </div>
+          </dl>
+        </div>
 
-      </dl>
-
-      <div class="d-flex justify-content-between mt-4">
-        <a href="/admin/usuarios" class="btn btn-secondary">
-          <i class="fas fa-arrow-left"></i> Volver
-        </a>
-
-        <div class="btn-group">
-          <a href="/admin/usuarios/<%= usuario.id_usuario %>/edit" class="btn btn-warning">
-            <i class="fas fa-edit"></i> Editar
+        <!-- Botones de acción -->
+        <div class="flex flex-col sm:flex-row justify-between items-center gap-4 pt-6 border-t border-gray-600 mt-6">
+          <!-- Botón Volver -->
+          <a href="/admin/usuarios"
+            class="w-full sm:w-auto inline-flex items-center justify-center px-4 py-2 border border-gray-600 text-sm font-medium rounded-md text-gray-200 bg-gray-700 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors">
+            <i class="fas fa-arrow-left mr-2"></i>
+            Volver
           </a>
 
-          <form action="/admin/usuarios/<%= usuario.id_usuario %>?_method=DELETE" method="POST" class="d-inline">
-            <button type="submit" class="btn btn-danger" onclick="return confirm('¿Seguro que quieres eliminar este usuario?')">
-              <i class="fas fa-trash"></i> Eliminar
-            </button>
-          </form>
+          <!-- Grupo de botones -->
+          <div class="flex flex-col sm:flex-row w-full sm:w-auto gap-2">
+            <a href="/admin/usuarios/<%= usuario.id_usuario %>/edit"
+              class="w-full sm:w-auto inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-gray-100 bg-gray-600 hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors">
+              <i class="fas fa-edit mr-2"></i>
+              Editar
+            </a>
+
+            <form action="/admin/usuarios/<%= usuario.id_usuario %>?_method=DELETE" method="POST"
+              class="w-full sm:w-auto">
+              <button type="submit"
+                class="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors"
+                onclick="return confirm('¿Seguro que quieres eliminar este usuario?')">
+                <i class="fas fa-trash mr-2"></i>
+                Eliminar
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<%- include('../../partials/footer') %>
+  <div class="mb-8"></div>
+
+  <%- include('../../partials/footer') %>

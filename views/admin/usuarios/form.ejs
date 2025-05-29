@@ -1,117 +1,175 @@
 <%- include('../../partials/header', { title, user: user }) %>
 
-<div class="container mt-4">
-  <div class="card shadow-sm">
-    <div class="card-header bg-primary text-white">
-      <h4 class="mb-0">
-        <i class="fas fa-<%= isEditing ? 'edit' : 'user-plus' %>"></i>
-        <%= isEditing ? 'Editar' : 'Registrar' %> Usuario
-      </h4>
-    </div>
-    <div class="card-body">
+  <div class="container mx-auto mt-8 px-4">
+    <div class="bg-gray-800 text-gray-100 rounded-lg shadow-md overflow-hidden">
+      <!-- Header -->
+      <div class="bg-gray-900 text-white px-6 py-4">
+        <h4 class="text-xl font-semibold mb-0 flex items-center">
+          <i class="fas fa-<%= isEditing ? 'edit' : 'user-plus' %> mr-2"></i>
+          <%= isEditing ? 'Editar' : 'Registrar' %> Usuario
+        </h4>
+      </div>
 
-      <% if (errors && errors.length > 0) { %>
-        <div class="alert alert-danger">
-          <h5 class="alert-heading">
-            <i class="fas fa-exclamation-triangle"></i> Errores de validación
-          </h5>
-          <ul class="mb-0">
-            <% errors.forEach(error => { %>
-              <li><%= error.msg %></li>
-            <% }); %>
-          </ul>
-        </div>
-      <% } %>
-
-      <form action="<%= isEditing ? `/admin/usuarios/${usuario.id_usuario}?_method=PUT` : '/admin/usuarios' %>" method="POST">
-        <div class="form-row">
-
-          <div class="form-group col-md-6">
-            <label for="primer_nombre">Primer Nombre</label>
-            <input type="text" class="form-control" id="primer_nombre" name="primer_nombre" value="<%= usuario.primer_nombre || '' %>" required>
-          </div>
-
-          <div class="form-group col-md-6">
-            <label for="segundo_nombre">Segundo Nombre</label>
-            <input type="text" class="form-control" id="segundo_nombre" name="segundo_nombre" value="<%= usuario.segundo_nombre || '' %>">
-          </div>
-
-          <div class="form-group col-md-6">
-            <label for="primer_apellido">Primer Apellido</label>
-            <input type="text" class="form-control" id="primer_apellido" name="primer_apellido" value="<%= usuario.primer_apellido || '' %>" required>
-          </div>
-
-          <div class="form-group col-md-6">
-            <label for="segundo_apellido">Segundo Apellido</label>
-            <input type="text" class="form-control" id="segundo_apellido" name="segundo_apellido" value="<%= usuario.segundo_apellido || '' %>">
-          </div>
-
-          <div class="form-group col-md-6">
-            <label for="tipo_documento">Tipo Documento</label>
-            <input type="text" class="form-control" id="tipo_documento" name="tipo_documento" value="<%= usuario.tipo_documento || '' %>" required>
-          </div>
-
-          <div class="form-group col-md-6">
-            <label for="numero_documento">Número Documento</label>
-            <input type="text" class="form-control" id="numero_documento" name="numero_documento" value="<%= usuario.numero_documento || '' %>" required>
-          </div>
-
-          <div class="form-group col-md-6">
-            <label for="fecha_nacimiento">Fecha de Nacimiento</label>
-            <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" value="<%= usuario.fecha_nacimiento ? usuario.fecha_nacimiento.toISOString().split('T')[0] : '' %>" required>
-          </div>
-
-          <div class="form-group col-md-6">
-            <label for="celular_usuario">Celular</label>
-            <input type="text" class="form-control" id="celular_usuario" name="celular_usuario" value="<%= usuario.celular_usuario || '' %>" required>
-          </div>
-
-          <div class="form-group col-md-6">
-            <label for="direccion_usuario">Dirección</label>
-            <input type="text" class="form-control" id="direccion_usuario" name="direccion_usuario" value="<%= usuario.direccion_usuario || '' %>" required>
-          </div>
-
-          <div class="form-group col-md-6">
-            <label for="nombre_usuario">Nombre de Usuario</label>
-            <input type="text" class="form-control" id="nombre_usuario" name="nombre_usuario" value="<%= usuario.nombre_usuario || '' %>" required>
-          </div>
-
-          <div class="form-group col-md-6">
-            <label for="correo">Correo Electrónico</label>
-            <input type="email" class="form-control" id="correo" name="correo" value="<%= usuario.correo || '' %>" required>
-          </div>
-
-          <% if (!isEditing) { %>
-          <div class="form-group col-md-6">
-            <label for="contrasena">Contraseña</label>
-            <input type="password" class="form-control" id="contrasena" name="contrasena" required>
+      <!-- Cuerpo del formulario -->
+      <div class="p-6">
+        <!-- Mensajes de error -->
+        <% if (errors && errors.length> 0) { %>
+          <div class="bg-red-800/20 border border-red-800 rounded-md p-4 mb-6">
+            <div class="flex items-center mb-2">
+              <i class="fas fa-exclamation-triangle text-red-400 mr-2"></i>
+              <h5 class="text-red-300 font-medium">Errores de validación</h5>
+            </div>
+            <ul class="text-red-400 text-sm space-y-1 ml-6">
+              <% errors.forEach(error=> { %>
+                <li class="list-disc">
+                  <%= error.msg %>
+                </li>
+                <% }); %>
+            </ul>
           </div>
           <% } %>
 
-          <div class="form-group col-md-6">
-            <label for="id_rol_PK">Rol</label>
-            <select class="form-control" id="id_rol_PK" name="id_rol_PK" required>
-              <option value="">-- Seleccione un rol --</option>
-              <% roles.forEach(rol => { %>
-                <option value="<%= rol.id_rol %>" <%= usuario.id_rol_PK == rol.id_rol ? 'selected' : '' %>><%= rol.nombre_rol %></option>
-              <% }) %>
-            </select>
-          </div>
+            <!-- Formulario -->
+            <form action="<%= isEditing ? `/admin/usuarios/${usuario.id_usuario}?_method=PUT` : '/admin/usuarios' %>"
+              method="POST">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <!-- Primer Nombre -->
+                <div>
+                  <label for="primer_nombre" class="block text-sm font-medium text-gray-300 mb-2">Primer Nombre</label>
+                  <input type="text" id="primer_nombre" name="primer_nombre" value="<%= usuario.primer_nombre || '' %>"
+                    required
+                    class="w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition-colors">
+                </div>
 
-        </div>
+                <!-- Segundo Nombre -->
+                <div>
+                  <label for="segundo_nombre" class="block text-sm font-medium text-gray-300 mb-2">Segundo
+                    Nombre</label>
+                  <input type="text" id="segundo_nombre" name="segundo_nombre"
+                    value="<%= usuario.segundo_nombre || '' %>"
+                    class="w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition-colors">
+                </div>
 
-        <div class="form-group d-flex justify-content-between mt-3">
-          <a href="/admin/usuarios" class="btn btn-secondary">
-            <i class="fas fa-arrow-left"></i> Cancelar
-          </a>
-          <button type="submit" class="btn btn-primary">
-            <i class="fas fa-save"></i> <%= isEditing ? 'Actualizar' : 'Guardar' %>
-          </button>
-        </div>
-      </form>
+                <!-- Primer Apellido -->
+                <div>
+                  <label for="primer_apellido" class="block text-sm font-medium text-gray-300 mb-2">Primer
+                    Apellido</label>
+                  <input type="text" id="primer_apellido" name="primer_apellido"
+                    value="<%= usuario.primer_apellido || '' %>" required
+                    class="w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition-colors">
+                </div>
+
+                <!-- Segundo Apellido -->
+                <div>
+                  <label for="segundo_apellido" class="block text-sm font-medium text-gray-300 mb-2">Segundo
+                    Apellido</label>
+                  <input type="text" id="segundo_apellido" name="segundo_apellido"
+                    value="<%= usuario.segundo_apellido || '' %>"
+                    class="w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition-colors">
+                </div>
+
+                <!-- Tipo Documento -->
+                <div>
+                  <label for="tipo_documento" class="block text-sm font-medium text-gray-300 mb-2">Tipo
+                    Documento</label>
+                  <input type="text" id="tipo_documento" name="tipo_documento"
+                    value="<%= usuario.tipo_documento || '' %>" required
+                    class="w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition-colors">
+                </div>
+
+                <!-- Número Documento -->
+                <div>
+                  <label for="numero_documento" class="block text-sm font-medium text-gray-300 mb-2">Número
+                    Documento</label>
+                  <input type="text" id="numero_documento" name="numero_documento"
+                    value="<%= usuario.numero_documento || '' %>" required
+                    class="w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition-colors">
+                </div>
+
+                <!-- Fecha de Nacimiento -->
+                <div>
+                  <label for="fecha_nacimiento" class="block text-sm font-medium text-gray-300 mb-2">Fecha de
+                    Nacimiento</label>
+                  <input type="date" id="fecha_nacimiento" name="fecha_nacimiento"
+                    value="<%= usuario.fecha_nacimiento ? usuario.fecha_nacimiento.toISOString().split('T')[0] : '' %>"
+                    required
+                    class="w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition-colors">
+                </div>
+
+                <!-- Celular -->
+                <div>
+                  <label for="celular_usuario" class="block text-sm font-medium text-gray-300 mb-2">Celular</label>
+                  <input type="text" id="celular_usuario" name="celular_usuario"
+                    value="<%= usuario.celular_usuario || '' %>" required
+                    class="w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition-colors">
+                </div>
+
+                <!-- Dirección -->
+                <div>
+                  <label for="direccion_usuario" class="block text-sm font-medium text-gray-300 mb-2">Dirección</label>
+                  <input type="text" id="direccion_usuario" name="direccion_usuario"
+                    value="<%= usuario.direccion_usuario || '' %>" required
+                    class="w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition-colors">
+                </div>
+
+                <!-- Nombre de Usuario -->
+                <div>
+                  <label for="nombre_usuario" class="block text-sm font-medium text-gray-300 mb-2">Nombre de
+                    Usuario</label>
+                  <input type="text" id="nombre_usuario" name="nombre_usuario"
+                    value="<%= usuario.nombre_usuario || '' %>" required
+                    class="w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition-colors">
+                </div>
+
+                <!-- Correo -->
+                <div>
+                  <label for="correo" class="block text-sm font-medium text-gray-300 mb-2">Correo Electrónico</label>
+                  <input type="email" id="correo" name="correo" value="<%= usuario.correo || '' %>" required
+                    class="w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition-colors">
+                </div>
+
+                <% if (!isEditing) { %>
+                  <!-- Contraseña (solo al registrar) -->
+                  <div>
+                    <label for="contrasena" class="block text-sm font-medium text-gray-300 mb-2">Contraseña</label>
+                    <input type="password" id="contrasena" name="contrasena" required
+                      class="w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition-colors">
+                  </div>
+                  <% } %>
+
+                    <!-- Rol -->
+                    <div>
+                      <label for="id_rol_PK" class="block text-sm font-medium text-gray-300 mb-2">Rol</label>
+                      <select id="id_rol_PK" name="id_rol_PK" required
+                        class="w-full px-3 py-2 border border-gray-700 rounded-md shadow-sm bg-gray-700 text-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-gray-500 transition-colors">
+                        <option value="">-- Seleccione un rol --</option>
+                        <% roles.forEach(rol=> { %>
+                          <option value="<%= rol.id_rol %>" <%=usuario.id_rol_PK==rol.id_rol ? 'selected' : '' %>><%=
+                              rol.nombre_rol %>
+                          </option>
+                          <% }) %>
+                      </select>
+                    </div>
+              </div>
+
+              <!-- Botones de acción -->
+              <div class="flex flex-col sm:flex-row justify-between items-center gap-4 pt-4 border-t border-gray-700">
+                <a href="/admin/usuarios"
+                  class="w-full sm:w-auto inline-flex items-center justify-center px-4 py-2 border border-gray-600 text-sm font-medium rounded-md text-gray-200 bg-gray-700 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors">
+                  <i class="fas fa-arrow-left mr-2"></i>
+                  Cancelar
+                </a>
+                <button type="submit"
+                  class="w-full sm:w-auto inline-flex items-center justify-center px-6 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-gray-600 hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors">
+                  <i class="fas fa-save mr-2"></i>
+                  <%= isEditing ? 'Actualizar' : 'Guardar' %>
+                </button>
+              </div>
+            </form>
+      </div>
     </div>
   </div>
-</div>
 
-<br>
-<%- include('../../partials/footer') %>
+  <div class="mb-8"></div>
+
+  <%- include('../../partials/footer') %>

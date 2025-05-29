@@ -1,69 +1,104 @@
 <%- include('../../partials/header', { title, user: user }) %>
 
-  <div class="container mt-4">
-    <div class="card shadow-sm">
-      <div class="card-header bg-primary text-white">
-        <h4 class="mb-0">
-          <i class="fas fa-<%= isEditing ? 'edit' : 'plus' %>"></i>
-          <%= isEditing ? 'Editar' : 'Registrar' %> Venta
-        </h4>
-      </div>
-      <div class="card-body">
-        <% if (errors && errors.length> 0) { %>
-          <div class="alert alert-danger">
-            <h5 class="alert-heading"><i class="fas fa-exclamation-triangle"></i> Errores de validación</h5>
-            <ul class="mb-0">
-              <% errors.forEach(error=> { %>
-                <li>
-                  <%= error.msg %>
-                </li>
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 text-gray-200">
+    <!-- Header con título y botón -->
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+      <h1
+        class="text-3xl font-extrabold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent flex items-center">
+        <i class="fas fa-shopping-cart mr-3 text-purple-400"></i>
+        Listado de Ventas
+      </h1>
+      <a href="/admin/ventas/create"
+        class="inline-flex items-center justify-center px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-medium rounded-xl shadow-lg hover:from-purple-600 hover:to-pink-600 transition-all duration-300">
+        <i class="fas fa-plus mr-2"></i>
+        Nueva Venta
+      </a>
+    </div>
+
+    <!-- Card principal -->
+    <div
+      class="bg-gray-800 bg-opacity-60 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-gray-700 hover:border-purple-500 transition-all duration-300">
+      <% if (ventas && ventas.length> 0) { %>
+        <div class="overflow-x-auto">
+          <table class="min-w-full divide-y divide-gray-700">
+            <thead class="bg-gray-700 bg-opacity-50">
+              <tr>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                  ID
+                </th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                  Valor Total
+                </th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                  Fecha de Venta
+                </th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                  Método de Pago
+                </th>
+                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                  ID Compra
+                </th>
+                <th scope="col"
+                  class="px-6 py-3 text-center text-xs font-medium text-gray-300 uppercase tracking-wider">
+                  Acciones
+                </th>
+              </tr>
+            </thead>
+            <tbody class="bg-gray-800 divide-y divide-gray-700">
+              <% ventas.forEach(venta=> { %>
+                <tr class="hover:bg-gray-700 transition-colors">
+                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-200">
+                    <%= venta.id_venta %>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">$<%= venta.valor_total.toLocaleString()
+                      %>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                    <%= new Date(venta.fecha_venta).toLocaleDateString() %>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                    <%= venta.metodo_pago %>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                    <%= venta.id_compra_PK %>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-center">
+                    <div class="flex items-center justify-center space-x-2">
+                      <!-- Botón Ver -->
+                      <a href="/admin/ventas/<%= venta.id_venta %>"
+                        class="flex items-center justify-center w-8 h-8 text-xs font-medium text-white bg-indigo-500 hover:bg-indigo-600 rounded-md shadow hover:shadow-lg transition-all duration-300"
+                        title="Ver detalle">
+                        <i class="fas fa-eye"></i>
+                      </a>
+
+                      <!-- Botón Editar -->
+                      <a href="/admin/ventas/<%= venta.id_venta %>/edit"
+                        class="flex items-center justify-center w-8 h-8 text-xs font-medium text-white bg-amber-500 hover:bg-amber-600 rounded-md shadow hover:shadow-lg transition-all duration-300"
+                        title="Editar">
+                        <i class="fas fa-edit"></i>
+                      </a>
+
+                      <!-- Botón Eliminar -->
+                      <form action="/admin/ventas/<%= venta.id_venta %>?_method=DELETE" method="POST" class="inline">
+                        <button type="submit"
+                          class="flex items-center justify-center w-8 h-8 text-xs font-medium text-white bg-red-500 hover:bg-red-600 rounded-md shadow hover:shadow-lg transition-all duration-300"
+                          title="Eliminar" onclick="confirmarEliminacion(event, 'venta')">
+                          <i class="fas fa-trash-alt"></i>
+                        </button>
+                      </form>
+                    </div>
+                  </td>
+                </tr>
                 <% }); %>
-            </ul>
-          </div>
+            </tbody>
+          </table>
+        </div>
+        <% } else { %>
+          <p class="text-gray-300">No hay ventas registradas. <a href="/admin/ventas/create"
+              class="text-purple-400 underline hover:text-purple-300 transition-colors">Registre una nueva venta</a>.
+          </p>
           <% } %>
-
-            <form action="<%= isEditing ? `/ventas/${venta.id_venta}?_method=PUT` : '/ventas' %>" method="POST">
-              <div class="form-row">
-                <div class="form-group col-md-6">
-                  <label for="valor_total">Valor Total</label>
-                  <input type="number" class="form-control" id="valor_total" name="valor_total"
-                    value="<%= venta.valor_total || '' %>" required>
-                </div>
-
-                <div class="form-group col-md-6">
-                  <label for="fecha_venta">Fecha de Venta</label>
-                  <input type="date" class="form-control" id="fecha_venta" name="fecha_venta"
-                    value="<%= venta.fecha_venta ? venta.fecha_venta.toISOString().split('T')[0] : '' %>" required>
-                </div>
-              </div>
-
-              <div class="form-row">
-                <div class="form-group col-md-6">
-                  <label for="metodo_pago">Método de Pago</label>
-                  <input type="text" class="form-control" id="metodo_pago" name="metodo_pago"
-                    value="<%= venta.metodo_pago || '' %>" required>
-                </div>
-
-                <div class="form-group col-md-6">
-                  <label for="id_compra_PK">ID de Compra</label>
-                  <input type="number" class="form-control" id="id_compra_PK" name="id_compra_PK"
-                    value="<%= venta.id_compra_PK || '' %>" required>
-                </div>
-              </div>
-
-              <div class="form-group d-flex justify-content-between mt-3">
-                <a href="/admin/ventas" class="btn btn-secondary">
-                  <i class="fas fa-arrow-left"></i> Cancelar
-                </a>
-                <button type="submit" class="btn btn-primary">
-                  <i class="fas fa-save"></i>
-                  <%= isEditing ? 'Actualizar' : 'Guardar' %>
-                </button>
-              </div>
-            </form>
-      </div>
     </div>
   </div>
 
-  <br>
   <%- include('../../partials/footer') %>
